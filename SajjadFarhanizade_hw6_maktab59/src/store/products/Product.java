@@ -35,12 +35,18 @@ public class Product {
         this.price = price;
     }
 
-    public boolean equals(Product p){
-        if(p.getClass() == this.getClass())
+    public boolean equals(Product p) {
+        if (p.getClass() == this.getClass())
             return true;
-        else if(p.getId() == this.getId())
+        else if (p.getId() == this.getId())
             return true;
         return false;
     }
 
+    public boolean equals(int id) {
+        if (id == this.getId())
+            return true;
+        else
+            return false;
+    }
 }
