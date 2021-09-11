@@ -4,10 +4,10 @@ import store.products.Product;
 import attribute.*;
 
 public class Shoe extends Product {
-        int size;
-        Gender gender;
-        Color color;
-        Material material;
+    private int size;
+    private Gender gender;
+    private Color color;
+    private Material material;
 
     public Shoe(int id, String name, int price, int size, Gender gender, Color color, Material material) {
         super(id, name, price);

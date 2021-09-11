@@ -1,8 +1,8 @@
 package store.products.electrical;
 
 public class Radio extends ElectricalAppliance {
-    int antennaRange;
-    SignalModulationMode signal;
+    private int antennaRange;
+    private SignalModulationMode signal;
 
     public Radio(int id, String name, int price, Voltage voltage, PowerSource powerSource,
                  int powerConsumption, int antennaRange, SignalModulationMode signal) {

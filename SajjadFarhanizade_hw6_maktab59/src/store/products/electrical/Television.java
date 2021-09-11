@@ -1,9 +1,9 @@
 package store.products.electrical;
 
 public class Television extends ElectricalAppliance{
-    TV_Type tvType;
-    int sizeInInch;
-    int[] resolution = new int[2];
+    private TV_Type tvType;
+    private int sizeInInch;
+    private int[] resolution = new int[2];
 
     public Television(int id, String name, int price, Voltage voltage, PowerSource powerSource,
                       int powerConsumption, TV_Type tvType, int sizeInInch, int[] resolution) {
