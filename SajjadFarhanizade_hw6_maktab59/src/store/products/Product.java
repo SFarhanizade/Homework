@@ -34,4 +34,13 @@ public class Product {
         this.name = name;
         this.price = price;
     }
+
+    public boolean equals(Product p){
+        if(p.getClass() == this.getClass())
+            return true;
+        else if(p.getId() == this.getId())
+            return true;
+        return false;
+    }
+
 }
