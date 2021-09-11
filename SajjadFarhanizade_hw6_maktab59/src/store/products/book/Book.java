@@ -2,39 +2,19 @@ package store.products.book;
 
 import store.products.Product;
 
-public class Book extends Product {
-    private Subject subject;
-    private int pageNumber;
-    private String publisher;
+public class Book extends BookBase {
+    int edition;
 
-    public Book(int id, String name, int price, Subject subject, int pageNumber, String publisher) {
-        super(id, name, price);
-        this.subject = subject;
-        this.pageNumber = pageNumber;
-        this.publisher = publisher;
+    public Book(int id, String name, int price, Subject subject, int pageNumber, String publisher, int edition) {
+        super(id, name, price, subject, pageNumber, publisher);
+        this.edition = edition;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public int getEdition() {
+        return edition;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public void setEdition(int edition) {
+        this.edition = edition;
     }
 }
