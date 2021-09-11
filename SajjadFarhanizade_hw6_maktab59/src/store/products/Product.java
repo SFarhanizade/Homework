@@ -57,4 +57,9 @@ public class Product {
         else
             return false;
     }
+
+    @Override
+    public String toString() {
+        return id + "- " + name  +" | Price " + price +" | " + amount + " left";
+    }
 }

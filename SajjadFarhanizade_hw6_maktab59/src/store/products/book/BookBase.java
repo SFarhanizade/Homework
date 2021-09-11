@@ -37,4 +37,9 @@ public class BookBase extends Product {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     Subject " + subject +" PageNumber " + pageNumber +" Publisher " + publisher;
+    }
 }

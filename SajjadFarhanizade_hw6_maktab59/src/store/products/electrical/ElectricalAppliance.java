@@ -37,4 +37,9 @@ public class ElectricalAppliance extends Product {
     public void setPowerConsumption(int powerConsumption) {
         this.powerConsumption = powerConsumption;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     Voltage "+voltage+" PowerSource " + powerSource +" PowerConsumption " + powerConsumption;
+    }
 }

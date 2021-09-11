@@ -15,4 +15,9 @@ public class Magazine extends BookBase {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     Number " + number;
+    }
 }

@@ -48,4 +48,9 @@ public class Shoe extends Product {
     public void setMaterial(Material material) {
         this.material = material;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     Size " + size +" For " + gender +" Color " + color +" Material " + material;
+    }
 }

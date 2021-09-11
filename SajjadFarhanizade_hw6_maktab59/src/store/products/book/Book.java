@@ -17,4 +17,9 @@ public class Book extends BookBase {
     public void setEdition(int edition) {
         this.edition = edition;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     Edition " + edition;
+    }
 }

@@ -1,5 +1,7 @@
 package store.products.electrical;
 
+import java.util.Arrays;
+
 public class Television extends ElectricalAppliance{
     private TV_Type tvType;
     private int sizeInInch;
@@ -34,5 +36,10 @@ public class Television extends ElectricalAppliance{
 
     public void setResolution(int[] resolution) {
         this.resolution = resolution;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     TvType " + tvType +" SizeInInch " + sizeInInch +" Resolution=" + Arrays.toString(resolution);
     }
 }

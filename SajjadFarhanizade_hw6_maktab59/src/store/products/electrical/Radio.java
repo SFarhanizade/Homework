@@ -25,4 +25,9 @@ public class Radio extends ElectricalAppliance {
     public void setSignal(SignalModulationMode signal) {
         this.signal = signal;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\n     AntennaRange " + antennaRange +" Signal " + signal;
+    }
 }
