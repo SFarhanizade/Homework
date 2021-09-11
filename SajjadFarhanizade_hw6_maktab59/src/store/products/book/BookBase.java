@@ -7,8 +7,8 @@ public class BookBase extends Product {
     private int pageNumber;
     private String publisher;
 
-    public BookBase(int id, String name, int price, Subject subject, int pageNumber, String publisher) {
-        super(id, name, price);
+    public BookBase(int id, String name, int price, int amount, Subject subject, int pageNumber, String publisher) {
+        super(id, name, price, amount);
         this.subject = subject;
         this.pageNumber = pageNumber;
         this.publisher = publisher;

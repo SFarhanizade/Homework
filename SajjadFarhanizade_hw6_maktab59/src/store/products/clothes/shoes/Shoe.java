@@ -9,8 +9,8 @@ public class Shoe extends Product {
     private Color color;
     private Material material;
 
-    public Shoe(int id, String name, int price, int size, Gender gender, Color color, Material material) {
-        super(id, name, price);
+    public Shoe(int id, String name, int price, int amount, int size, Gender gender, Color color, Material material) {
+        super(id, name, price, amount);
         this.size = size;
         this.gender = gender;
         this.color = color;

@@ -5,9 +5,8 @@ public class Television extends ElectricalAppliance{
     private int sizeInInch;
     private int[] resolution = new int[2];
 
-    public Television(int id, String name, int price, Voltage voltage, PowerSource powerSource,
-                      int powerConsumption, TV_Type tvType, int sizeInInch, int[] resolution) {
-        super(id, name, price, voltage, powerSource, powerConsumption);
+    public Television(int id, String name, int price, int amount, Voltage voltage, PowerSource powerSource, int powerConsumption, TV_Type tvType, int sizeInInch, int[] resolution) {
+        super(id, name, price, amount, voltage, powerSource, powerConsumption);
         this.tvType = tvType;
         this.sizeInInch = sizeInInch;
         this.resolution = resolution;

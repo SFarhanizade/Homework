@@ -4,9 +4,8 @@ public class Radio extends ElectricalAppliance {
     private int antennaRange;
     private SignalModulationMode signal;
 
-    public Radio(int id, String name, int price, Voltage voltage, PowerSource powerSource,
-                 int powerConsumption, int antennaRange, SignalModulationMode signal) {
-        super(id, name, price, voltage, powerSource, powerConsumption);
+    public Radio(int id, String name, int price, int amount, Voltage voltage, PowerSource powerSource, int powerConsumption, int antennaRange, SignalModulationMode signal) {
+        super(id, name, price, amount, voltage, powerSource, powerConsumption);
         this.antennaRange = antennaRange;
         this.signal = signal;
     }

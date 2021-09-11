@@ -5,7 +5,7 @@ import attribute.Gender;
 import attribute.Material;
 
 public class SportShoe extends Shoe{
-    public SportShoe(int id, String name, int price, int size, Gender gender, Color color, Material material) {
-        super(id, name, price, size, gender, color, material);
+    public SportShoe(int id, String name, int price, int amount, int size, Gender gender, Color color, Material material) {
+        super(id, name, price, amount, size, gender, color, material);
     }
 }

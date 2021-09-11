@@ -7,8 +7,8 @@ public class ElectricalAppliance extends Product {
     private PowerSource powerSource;
     private int powerConsumption;
 
-    public ElectricalAppliance(int id, String name, int price, Voltage voltage, PowerSource powerSource, int powerConsumption) {
-        super(id, name, price);
+    public ElectricalAppliance(int id, String name, int price, int amount, Voltage voltage, PowerSource powerSource, int powerConsumption) {
+        super(id, name, price, amount);
         this.voltage = voltage;
         this.powerSource = powerSource;
         this.powerConsumption = powerConsumption;
