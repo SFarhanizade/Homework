@@ -7,8 +7,6 @@ import store.products.clothes.shoes.FormalShoe;
 import store.products.clothes.shoes.SportShoe;
 import store.products.electrical.Radio;
 import store.products.electrical.Television;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Stock {
@@ -47,6 +45,76 @@ public class Stock {
             }
         }
     }
+
+    public void buyProduct(Object[][] list){
+        Product product;
+        for (int i = 0; i < list.length; i++) {
+            if(list[i][1]==null)
+                break;
+            product = (Product) list[i][1];
+            product.setAmount(product.getAmount()-Integer.parseInt(list[i][2].toString()));
+            updateProduct(product);
+        }
+    }
+
+    private void updateProduct(Product product){
+        for (int i = 0; i < books.length; i++) {
+            if(books[i].equals(product)) {
+                books[i] = (Book) product;
+                return;
+            }
+        }
+        for (int i = 0; i < magazines.length; i++) {
+            if(magazines[i].equals(product)){
+                magazines[i]= (Magazine) product;
+                return;
+            }
+        }
+        for (int i = 0; i < formalShoes.length; i++) {
+            if(formalShoes[i].equals(product)){
+                formalShoes[i]= (FormalShoe) product;
+                return;
+            }
+        }
+        for (int i = 0; i < sportShoes.length; i++) {
+            if(sportShoes[i].equals(product)){
+                sportShoes[i]= (SportShoe) product;
+                return;
+            }
+        }
+        for (int i = 0; i < televisions.length; i++) {
+            if(televisions[i].equals(product)){
+               televisions[i]= (Television) product;
+                return;
+            }
+        }
+        for (int i = 0; i < radios.length; i++) {
+            if(radios[i].equals(product)){
+                radios[i]= (Radio) product;
+                return;
+            }
+        }
+    }
+
+    public Product[][] getProduct(){
+        Product[][] products = new Product[6][];
+        products[0]= books;
+        products[1]= magazines;
+        products[2]= formalShoes;
+        products[3]= sportShoes;
+        products[4]= televisions;
+        products[5]= radios;
+
+        return products;
+    }
+
+   /* public void buyProduct(Product... p){
+        for (int i = 0; i < p.length; i++) {
+
+        }
+    }*/
+
+    //private void lessenAmount(P)
 
     private boolean equals(Product p){
         for (int i = 0; i < books.length; i++) {
