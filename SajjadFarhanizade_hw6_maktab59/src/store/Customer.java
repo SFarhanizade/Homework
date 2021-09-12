@@ -10,13 +10,14 @@ public class Customer {
     private int budget;
 private Address address;
 
-    public Customer(String userName, String passWord, String firstName, String lastName, String phone, String email, Address address) {
+    public Customer(String userName, String passWord, String firstName, String lastName, String phone, String email, int budget, Address address) {
         this.userName = userName;
         this.passWord = passWord;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+        this.budget = budget;
         this.address = address;
     }
 
