@@ -7,6 +7,7 @@ public class Customer {
     private String lastName;
     private String phone;
     private String email;
+    private int budget;
 private Address address;
 
     public Customer(String userName, String passWord, String firstName, String lastName, String phone, String email, Address address) {
@@ -73,5 +74,18 @@ private Address address;
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void deposit(int money){
+        budget+=money;
+    }
+
+    public void pay(int money) {
+        if(budget-money>=0)
+            budget-=money;
+        else{
+            System.out.println("Out Of Money!");
+            return;
+        }
     }
 }
