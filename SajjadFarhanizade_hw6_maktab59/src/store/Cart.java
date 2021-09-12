@@ -32,6 +32,10 @@ public class Cart {
         }
     }
 
+    public Object[][] getCartList(){
+        return list;
+    }
+
     public Factor getFactor(int id) {
         id *= lastIndex + 1;
         return factor.issueFactor(id, list);
@@ -39,6 +43,8 @@ public class Cart {
 
     @Override
     public String toString() {
+        if(lastIndex==0)
+            return "The cart is Empty!";
         String strList = "";
         for (int i = 0; i < lastIndex; i++) {
             strList += list[i][0] +"- "+((Product)list[i][1]).getName() + " | BasePrice "+((Product)list[i][1]).getPrice() +
