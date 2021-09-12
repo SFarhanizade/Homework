@@ -81,12 +81,18 @@ private Address address;
         budget+=money;
     }
 
-    public void pay(int money) {
-        if(budget-money>=0)
-            budget-=money;
+    public int getBudget() {
+        return budget;
+    }
+
+    public boolean pay(int money) {
+        if(budget-money>=0) {
+            budget -= money;
+            return true;
+        }
         else{
             System.out.println("Out Of Money!");
-            return;
+            return false;
         }
     }
 }
