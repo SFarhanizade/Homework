@@ -1,14 +1,16 @@
 package store;
 
 public class Customer {
-    private String userName;
+    private  String userName;
     private String passWord;
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String email;
+    private  String firstName;
+    private  String lastName;
+    private  String phone;
+    private  String email;
     private int budget;
-private Address address;
+    private  Address address;
+    private  Cart cart = new Cart();
+    private  Factor factor;
 
     public Customer(String userName, String passWord, String firstName, String lastName, String phone, String email, int budget, Address address) {
         this.userName = userName;
@@ -19,6 +21,17 @@ private Address address;
         this.email = email;
         this.budget = budget;
         this.address = address;
+    }
+
+    public Customer(Object[] user) {
+        this.userName = user[0].toString();
+        this.passWord = user[1].toString();
+        this.firstName = user[2].toString();
+        this.lastName = user[3].toString();
+        this.phone = user[4].toString();
+        this.email = user[5].toString();
+        this.budget = Integer.parseInt(user[6].toString());
+        this.address = (Address) user[7];
     }
 
     public String getUserName() {
@@ -49,6 +62,10 @@ private Address address;
         return lastName;
     }
 
+    public Factor getFactor() {
+        return cart.getFactor(cart.getCartList().length*userName.length()+Integer.parseInt(phone),this);
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -77,8 +94,8 @@ private Address address;
         this.address = address;
     }
 
-    public void deposit(int money){
-        budget+=money;
+    public void deposit(int money) {
+        budget += money;
     }
 
     public int getBudget() {
@@ -86,13 +103,29 @@ private Address address;
     }
 
     public boolean pay(int money) {
-        if(budget-money>=0) {
+        if (budget - money >= 0) {
             budget -= money;
             return true;
-        }
-        else{
+        } else {
             System.out.println("Out Of Money!");
             return false;
         }
+    }
+
+    protected boolean buy(Factor factor){
+        if(pay(factor.getTotalPrice())) {
+            Stock.updateProducts(cart.getCartList());
+            cart = new Cart();
+            return true;
+        }
+        return false;
+    }
+
+    protected  void addToCart(int id, int amount) {
+        cart.addToCart(id, amount);
+    }
+
+    protected  Cart getCart() {
+        return cart;
     }
 }
