@@ -46,7 +46,7 @@ public class Stock {
         }
     }
 
-    public void buyProduct(Object[][] list){
+    public static void updateProducts(Object[][] list){
         Product product;
         for (int i = 0; i < list.length; i++) {
             if(list[i][1]==null)
@@ -57,7 +57,7 @@ public class Stock {
         }
     }
 
-    private void updateProduct(Product product){
+    private static void updateProduct(Product product){
         for (int i = 0; i < books.length; i++) {
             if(books[i].equals(product)) {
                 books[i] = (Book) product;
@@ -96,7 +96,7 @@ public class Stock {
         }
     }
 
-    public Product[][] getProduct(){
+    public static Product[][] getProduct(){
         Product[][] products = new Product[6][];
         products[0]= books;
         products[1]= magazines;
@@ -106,6 +106,17 @@ public class Stock {
         products[5]= radios;
 
         return products;
+    }
+
+    public static Product getProduct(int id){
+        Product[][] products = getProduct();
+        for (int i = 0; i < products.length; i++) {
+            for (int j = 0; j < products[i].length; j++) {
+                if(products[i][j].getId()==id)
+                    return products[i][j];
+            }
+        }
+        return null;
     }
 
    /* public void buyProduct(Product... p){
