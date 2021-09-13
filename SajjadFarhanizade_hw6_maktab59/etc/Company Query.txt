@@ -1,0 +1,8 @@
+#1
+SELECT * FROM `Employee` WHERE name="Ali"
+
+#2
+SELECT * FROM `Employee` WHERE salary<1000
+
+#3
+select d.name, avg(e.salary) as AVGSalary from Employee e,Department d WHERE d.id = e.department group by e.department;
