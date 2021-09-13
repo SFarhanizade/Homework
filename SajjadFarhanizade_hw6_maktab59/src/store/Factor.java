@@ -2,12 +2,15 @@ package store;
 
 public class Factor {
     private int id;
-    private int totalAmount;
-    private int totalPrice;
+    private String userName;
+    private  int totalAmount;
+    private  int totalPrice;
     private boolean isPaid = false;
 
-    public Factor issueFactor(int id, Object[][] list){
+    public Factor issueFactor(int id,String userName, Object[][] list){
+        totalAmount = totalPrice = 0;
         this.id = id;
+        this.userName = userName;
         for (int i = 0; i < list.length; i++) {
             if(list[i][1]!=null) {
                 totalAmount += Integer.parseInt(list[i][2].toString());
@@ -19,6 +22,10 @@ public class Factor {
 
     public int getId() {
         return id;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public int getTotalAmount() {

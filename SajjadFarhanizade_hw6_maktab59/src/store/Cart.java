@@ -20,6 +20,22 @@ public class Cart {
             return;
         }
     }
+
+    public void addToCart(int id, int amount){
+        Product product = Stock.getProduct(id);
+        if(lastIndex<5){
+            list[lastIndex][0] = lastIndex+1;
+            list[lastIndex][1] = product;
+            list[lastIndex][2] = amount;
+            list[lastIndex][3] = product.getPrice()*amount;
+            lastIndex++;
+        }
+        else{
+            System.out.println("The cart is full!");
+            return;
+        }
+    }
+
     public void removeFromCart(int lastIndex){
         if(lastIndex<5 && lastIndex>0){
             list[lastIndex-1] = null;
@@ -36,9 +52,9 @@ public class Cart {
         return list;
     }
 
-    public Factor getFactor(int id) {
+    public Factor getFactor(int id,Customer customer) {
         id *= lastIndex + 1;
-        return factor.issueFactor(id, list);
+        return factor.issueFactor(id, customer.getUserName(), list);
     }
 
     @Override
