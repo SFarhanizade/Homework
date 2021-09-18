@@ -1,31 +1,26 @@
 import java.util.Arrays;
 
 public class DemoNewspaperSubscription {
-    static PhysicalNewspaperSubscription[] physicalNewspaperSubscriptions = new PhysicalNewspaperSubscription[3];
-    static OnlineNewspaperSubscription[] onlineNewspaperSubscriptions = new OnlineNewspaperSubscription[3];
+    static NewspaperSubscription[] newspaperSubscriptions = new NewspaperSubscription[6];
 
     public static void main(String[] args) {
-        for (int i = 0; i < physicalNewspaperSubscriptions.length; i++) {
-            physicalNewspaperSubscriptions[i]=new PhysicalNewspaperSubscription();
-            physicalNewspaperSubscriptions[i].setSubscriberName("Person "+i);
+        for (int i = 0; i < newspaperSubscriptions.length; i++) {
+            if(i<3)
+                newspaperSubscriptions[i]=new PhysicalNewspaperSubscription();
+            else
+                newspaperSubscriptions[i]=new OnlineNewspaperSubscription();
+            newspaperSubscriptions[i].setSubscriberName("Person "+i);
             if(i%2==0){
-                physicalNewspaperSubscriptions[i].setSubscriberAddress("");
+                    newspaperSubscriptions[i].setSubscriberAddress("");
             }
             else {
-                physicalNewspaperSubscriptions[i].setSubscriberAddress(Integer.toString(i));
+                if(i<3)
+                    newspaperSubscriptions[i].setSubscriberAddress("Iran");
+                else
+                    newspaperSubscriptions[i].setSubscriberAddress("Person"+i+"@gmail.com");
             }
         }
-        for (int i = 0; i < onlineNewspaperSubscriptions.length; i++) {
-            onlineNewspaperSubscriptions[i]=new OnlineNewspaperSubscription();
-            onlineNewspaperSubscriptions[i].setSubscriberName("Person "+i);
-            if(i%2==0){
-                onlineNewspaperSubscriptions[i].setSubscriberAddress("");
-            }
-            else {
-                onlineNewspaperSubscriptions[i].setSubscriberAddress("@");
-            }
-        }
-        System.out.println(Arrays.toString(onlineNewspaperSubscriptions));
-        System.out.println(Arrays.toString(physicalNewspaperSubscriptions));
+        for(NewspaperSubscription newspaperSubscription: newspaperSubscriptions)
+            System.out.println(newspaperSubscription.toString());
     }
 }
