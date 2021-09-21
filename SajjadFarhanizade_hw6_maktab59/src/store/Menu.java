@@ -15,7 +15,7 @@ public class Menu {
     public static void showMenu() {
         Menu menu = new Menu();
         if(!isUserLoggedIn){
-            System.out.println("1- Sing In");
+            System.out.println("1- Sign In");
             System.out.println("2- Sign Up");
             menuNum = input.nextInt();
             if(menuNum==1){
