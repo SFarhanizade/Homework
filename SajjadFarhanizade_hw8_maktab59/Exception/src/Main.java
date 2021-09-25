@@ -6,11 +6,14 @@ public class Main {
             System.out.println(oddAddition(2, 4));
             System.out.println(oddAddition(1, 4));
             System.out.println(oddAddition());
-
+            isException("IOException");
         } catch (ExceptionB | NullPointerException exceptionB) {
             System.out.println(exceptionB.getMessage());
         } catch (ExceptionA exceptionA) {
             System.out.println(exceptionA.getMessage());
+        }
+        catch(IOException ioException){
+            System.out.println(ioException.getMessage());
         }
     }
 
@@ -32,5 +35,9 @@ public class Main {
             return number / 5;
         else
             throw new ExceptionB("Can't be divided by five!");
+    }
+    static void isException(String exception) throws IOException{
+        if(exception.equals("IOException"))
+            throw new IOException("IOException");
     }
 }
