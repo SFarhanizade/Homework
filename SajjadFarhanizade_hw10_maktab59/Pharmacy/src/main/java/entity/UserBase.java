@@ -7,12 +7,16 @@ public class UserBase {
     private String username;
     private String password;
 
-    public UserBase(int id, String fName, String lName, String username, String password) {
-        this.id = id;
+    public UserBase(int id,String fName, String lName, String username, String password) {
+        this.id=id;
         this.fName = fName;
         this.lName = lName;
         this.username = username;
         this.password = password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
