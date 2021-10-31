@@ -14,7 +14,4 @@ public class StudentService extends AbstractCrudService<Student, Integer> {
         return (StudentDao) super.getBaseDao();
     }
 
-    public void find() {
-        getBaseDao().find();
-    }
 }
