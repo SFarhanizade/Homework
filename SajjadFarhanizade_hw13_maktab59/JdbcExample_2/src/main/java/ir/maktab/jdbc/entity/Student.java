@@ -74,6 +74,14 @@ public class Student implements BaseEntity<Integer> {
         courses.remove(course);
     }
 
+    public int getTotalUnits(){
+        int units=0;
+        for (Course course: courses){
+            units+=course.getUnit();
+        }
+        return units;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
