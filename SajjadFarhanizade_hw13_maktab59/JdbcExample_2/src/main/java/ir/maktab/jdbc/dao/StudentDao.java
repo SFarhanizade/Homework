@@ -2,6 +2,7 @@ package ir.maktab.jdbc.dao;
 
 import ir.maktab.jdbc.config.DataSourceConfig;
 import ir.maktab.jdbc.dao.core.BaseDao;
+import ir.maktab.jdbc.entity.Course;
 import ir.maktab.jdbc.entity.Major;
 import ir.maktab.jdbc.entity.Student;
 import ir.maktab.jdbc.exception.DataNotFoundException;
@@ -46,14 +47,23 @@ public class StudentDao implements BaseDao<Student, Integer> {
 
     @Override
     public void update(Integer id, Student newEntity) {
-        try (Connection connection = dataSourceConfig.createDataSource().getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE Student " +
-                     "SET name=?, family_name=?, m_id_fk=? " +
-                     "WHERE id=" + id);){
+        try (Connection connection = dataSourceConfig.createDataSource().getConnection();){
+            PreparedStatement ps = connection.prepareStatement("UPDATE Student " +
+                    "SET name=?, family_name=?, m_id_fk=? " +
+                    "WHERE id=" + id);
             ps.setString(1, newEntity.getName());
             ps.setString(2, newEntity.getFamilyName());
             ps.setInt(3, newEntity.getMajor().getId());
             ps.executeUpdate();
+            ps = connection.prepareStatement("Delete * From StudentCourse WHERE studentId=" + id);
+            ps.executeUpdate();
+            ps = connection.prepareStatement("Insert Into StudentCourse (studentId, courseId) " +
+                    "Values("+id+"?)");
+            for (Course course : newEntity.getCourses()){
+                ps.setInt(1,course.getId());
+                ps.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new ModificationDataException("Can not update data to db");
