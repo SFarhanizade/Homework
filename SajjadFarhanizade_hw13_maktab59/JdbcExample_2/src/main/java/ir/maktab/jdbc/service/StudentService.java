@@ -1,8 +1,6 @@
 package ir.maktab.jdbc.service;
 
-import ir.maktab.jdbc.dao.MajorDao;
 import ir.maktab.jdbc.dao.StudentDao;
-import ir.maktab.jdbc.dao.core.BaseDao;
 import ir.maktab.jdbc.entity.Student;
 
 import java.util.List;
