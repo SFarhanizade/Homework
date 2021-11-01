@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CourseDao implements BaseDao<Course, Integer> {
 
@@ -89,6 +91,33 @@ public class CourseDao implements BaseDao<Course, Integer> {
                             .build();
                 }
                 return course;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataNotFoundException("Can not find data from db");
+        }
+    }
+
+    public Set<Course> loadStudentCoursesById(Integer id){
+        try (Connection connection = dataSourceConfig.createDataSource().getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT c.* " +
+                     "FROM StudentCourse sc, Course c WHERE studentId = ? AND c.id = sc.courseId")) {
+            ps.setInt(1, id);
+            try (ResultSet resultSet = ps.executeQuery();) {
+                Set<Course> courses = new HashSet<>();
+                Course course = null;
+                while (resultSet.next()) {
+                    int cId = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    int units = resultSet.getInt("unit");
+                    course = Course.builder()
+                            .id(cId)
+                            .name(name)
+                            .unit(units)
+                            .build();
+                    courses.add(course);
+                }
+                return courses;
             }
         } catch (SQLException e) {
             e.printStackTrace();
