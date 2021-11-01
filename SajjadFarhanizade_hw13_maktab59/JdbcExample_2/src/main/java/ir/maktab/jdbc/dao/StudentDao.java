@@ -86,8 +86,8 @@ public class StudentDao implements BaseDao<Student, Integer> {
     @Override
     public Student loadById(Integer id) {
         try (Connection connection = dataSourceConfig.createDataSource().getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * " +
-                     "FROM Student WHERE id = ?")){
+             PreparedStatement ps = connection.prepareStatement("SELECT s.*, m.* " +
+                     "FROM Student s, Major m WHERE s.id = ? AND s.majorId = m.id")){
             ps.setInt(1, id);
             try (ResultSet resultSet = ps.executeQuery();) {
                 Student student = null;
@@ -95,12 +95,13 @@ public class StudentDao implements BaseDao<Student, Integer> {
                     int studentId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     String familyName = resultSet.getString("family_name");
-                    int majorId = resultSet.getInt("m_id_fk");
+                    int majorId = resultSet.getInt("m.id");
+                    String majorName = resultSet.getString("m.name");
                     student = Student.builder()
                             .id(studentId)
                             .name(name)
                             .familyName(familyName)
-                            .major(new Major(majorId))
+                            .major(new Major(majorId,majorName))
                             .build();
                 }
                 return student;
