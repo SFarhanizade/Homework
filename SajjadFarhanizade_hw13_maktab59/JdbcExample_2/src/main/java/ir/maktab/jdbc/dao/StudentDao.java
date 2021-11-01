@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class StudentDao implements BaseDao<Student, Integer> {
 
@@ -97,11 +98,13 @@ public class StudentDao implements BaseDao<Student, Integer> {
                     String familyName = resultSet.getString("family_name");
                     int majorId = resultSet.getInt("m.id");
                     String majorName = resultSet.getString("m.name");
+                    Set<Course> courses = new CourseDao().loadStudentCoursesById(id);
                     student = Student.builder()
                             .id(studentId)
                             .name(name)
                             .familyName(familyName)
                             .major(new Major(majorId,majorName))
+                            .courses(courses)
                             .build();
                 }
                 return student;
@@ -124,12 +127,15 @@ public class StudentDao implements BaseDao<Student, Integer> {
                 int studentId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String familyName = resultSet.getString("family_name");
-                int majorId = resultSet.getInt("m_id_fk");
+                int majorId = resultSet.getInt("m.id");
+                String majorName = resultSet.getString("m.name");
+                Set<Course> courses = new CourseDao().loadStudentCoursesById(studentId);
                 Student student = Student.builder()
                         .id(studentId)
                         .name(name)
                         .familyName(familyName)
-                        .major(new Major(majorId))
+                        .major(new Major(majorId,majorName))
+                        .courses(courses)
                         .build();
                 students.add(student);
             }
