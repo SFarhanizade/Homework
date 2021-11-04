@@ -3,10 +3,10 @@ package ir.maktab.jdbc.entity;
 import ir.maktab.jdbc.entity.base.BaseEntity;
 
 public class Major implements BaseEntity<Integer> {
-    private int id;
+    private Integer id;
     private String name;
 
-    public Major(int id, String name) {
+    public Major(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -41,8 +41,8 @@ public class Major implements BaseEntity<Integer> {
         return new MajorBuilder();
     }
     public static class MajorBuilder{
-        Integer id;
-        String name;
+        private Integer id;
+        private String name;
         public MajorBuilder id(int id){
             this.id = id;
             return this;
