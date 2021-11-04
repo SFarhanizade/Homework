@@ -49,10 +49,9 @@ public class CourseDao implements BaseDao<Course, Integer> {
         try (Connection connection = dataSourceConfig.createDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement("UPDATE Course " +
                      "SET name=?, unit=?" +
-                     "WHERE id=" + id);) {
+                     " WHERE id=" + id);) {
             ps.setString(1, newEntity.getName());
             ps.setInt(2, newEntity.getUnit());
-            ps.setInt(3, newEntity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

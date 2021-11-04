@@ -48,7 +48,6 @@ public class MajorDao implements BaseDao<Major, Integer> {
                      "SET name=? " +
                      "WHERE id=" + id);){
             ps.setString(1, newEntity.getName());
-            ps.setInt(2, newEntity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
