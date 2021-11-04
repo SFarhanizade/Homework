@@ -56,7 +56,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
             ps.setString(2, newEntity.getFamilyName());
             ps.setInt(3, newEntity.getMajor().getId());
             ps.executeUpdate();
-            ps = connection.prepareStatement("Delete * From StudentCourse WHERE studentId=" + id);
+            ps = connection.prepareStatement("Delete From StudentCourse WHERE studentId=" + id);
             ps.executeUpdate();
             ps = connection.prepareStatement("Insert Into StudentCourse (studentId, courseId) " +
                     "Values("+id+",?)");
@@ -96,14 +96,13 @@ public class StudentDao implements BaseDao<Student, Integer> {
                     int studentId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     String familyName = resultSet.getString("familyName");
-                    int majorId = resultSet.getInt("m.id");
-                    String majorName = resultSet.getString("m.name");
+                    int majorId = resultSet.getInt("majorId");
                     Set<Course> courses = new CourseDao().loadStudentCoursesById(id);
                     student = Student.builder()
                             .id(studentId)
                             .name(name)
                             .familyName(familyName)
-                            .major(new Major(majorId,majorName))
+                            .major(new MajorDao().loadMajorByStudentId(majorId))
                             .courses(courses)
                             .build();
                 }
@@ -118,8 +117,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
     @Override
     public List<Student> loadAll() {
         try (Connection connection = dataSourceConfig.createDataSource().getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT s.*, m.* " +
-                             "FROM Student s, Major m WHERE s.majorId = m.id");
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM Student");
              ResultSet resultSet = ps.executeQuery();){
 
             List<Student> students = new ArrayList<>();
@@ -127,14 +125,13 @@ public class StudentDao implements BaseDao<Student, Integer> {
                 int studentId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String familyName = resultSet.getString("familyName");
-                int majorId = resultSet.getInt("m.id");
-                String majorName = resultSet.getString("m.name");
+                int majorId = resultSet.getInt("majorId");
                 Set<Course> courses = new CourseDao().loadStudentCoursesById(studentId);
                 Student student = Student.builder()
                         .id(studentId)
                         .name(name)
                         .familyName(familyName)
-                        .major(new Major(majorId,majorName))
+                        .major(new MajorDao().loadMajorByStudentId(majorId))
                         .courses(courses)
                         .build();
                 students.add(student);
