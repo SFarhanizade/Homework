@@ -50,7 +50,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
     public void update(Integer id, Student newEntity) {
         try (Connection connection = dataSourceConfig.createDataSource().getConnection();){
             PreparedStatement ps = connection.prepareStatement("UPDATE Student " +
-                    "SET name=?, family_name=?, m_id_fk=? " +
+                    "SET name=?, familyName=?, majorId=? " +
                     "WHERE id=" + id);
             ps.setString(1, newEntity.getName());
             ps.setString(2, newEntity.getFamilyName());
@@ -59,7 +59,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
             ps = connection.prepareStatement("Delete * From StudentCourse WHERE studentId=" + id);
             ps.executeUpdate();
             ps = connection.prepareStatement("Insert Into StudentCourse (studentId, courseId) " +
-                    "Values("+id+"?)");
+                    "Values("+id+",?)");
             for (Course course : newEntity.getCourses()){
                 ps.setInt(1,course.getId());
                 ps.executeUpdate();
@@ -95,7 +95,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
                 while (resultSet.next()) {
                     int studentId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
-                    String familyName = resultSet.getString("family_name");
+                    String familyName = resultSet.getString("familyName");
                     int majorId = resultSet.getInt("m.id");
                     String majorName = resultSet.getString("m.name");
                     Set<Course> courses = new CourseDao().loadStudentCoursesById(id);
@@ -118,15 +118,15 @@ public class StudentDao implements BaseDao<Student, Integer> {
     @Override
     public List<Student> loadAll() {
         try (Connection connection = dataSourceConfig.createDataSource().getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT *" +
-                     " FROM Student");
+             PreparedStatement ps = connection.prepareStatement("SELECT s.*, m.* " +
+                             "FROM Student s, Major m WHERE s.majorId = m.id");
              ResultSet resultSet = ps.executeQuery();){
 
             List<Student> students = new ArrayList<>();
             while (resultSet.next()) {
                 int studentId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                String familyName = resultSet.getString("family_name");
+                String familyName = resultSet.getString("familyName");
                 int majorId = resultSet.getInt("m.id");
                 String majorName = resultSet.getString("m.name");
                 Set<Course> courses = new CourseDao().loadStudentCoursesById(studentId);
