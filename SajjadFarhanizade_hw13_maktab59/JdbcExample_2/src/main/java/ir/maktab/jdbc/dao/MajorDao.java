@@ -113,4 +113,26 @@ public class MajorDao implements BaseDao<Major, Integer> {
         throw new DataNotFoundException("Can not find data from db");
     }
     }
+
+    public Major loadMajorByStudentId(Integer majorId) {try (Connection connection = dataSourceConfig.createDataSource().getConnection();
+                                       PreparedStatement ps = connection.prepareStatement("SELECT *" +
+                                               " FROM Major WHERE id="+majorId);
+                                       ResultSet resultSet = ps.executeQuery();){
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            Major major = Major.builder()
+                    .id(id)
+                    .name(name)
+                    .build();
+            return major;
+        }
+        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw new DataNotFoundException("Can not find data from db");
+    }
+    }
+
 }
