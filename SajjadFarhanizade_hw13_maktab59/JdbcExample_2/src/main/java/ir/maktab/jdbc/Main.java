@@ -7,9 +7,7 @@ import ir.maktab.jdbc.service.CourseService;
 import ir.maktab.jdbc.service.MajorService;
 import ir.maktab.jdbc.service.StudentService;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
@@ -91,7 +89,12 @@ public class Main {
                             String name = input.nextLine();
                             System.out.print("Unit: ");
                             int unit = input.nextInt();
-                            courseService.saveOrUpdate(new Course(0, name, unit));
+                            input.nextLine();
+                            Course course = Course.builder()
+                                    .name(name)
+                                    .unit(unit)
+                                    .build();
+                            courseService.saveOrUpdate(course);
                             break;
                         }
                     }
@@ -125,7 +128,7 @@ public class Main {
                             System.out.println("Student id: " + tmpStudent.getId()
                                     + "\nName: " + tmpStudent.getName()
                                     + "\nFamily: " + tmpStudent.getFamilyName()
-                                    + "\nMajor: " + tmpStudent.getMajor().getName()
+                                    + "\nMajor: " + tmpStudent.getMajor()
                                     + "\nTotal Units: " + tmpStudent.getTotalUnits());
                             System.out.println("""
                                                                         
@@ -160,11 +163,13 @@ public class Main {
                                     }
                                     System.out.print("\nSelect a major: ");
                                     menuNum = input.nextInt();
+                                    input.nextLine();
                                     tmpStudent.setMajor(majors.get(menuNum - 1));
+                                    studentService.saveOrUpdate(tmpStudent);
                                     break;
                                 }
                                 case 4: {
-                                    List<Course> courses = (List<Course>) tmpStudent.getCourses();
+                                    List<Course> courses = new ArrayList<>(tmpStudent.getCourses());
                                     for (int i = 0; i < courses.size(); i++) {
                                         Course tmpCourse = courses.get(i);
                                         System.out.println((i + 1) + "-" + tmpCourse.getName());
@@ -177,27 +182,28 @@ public class Main {
                                             """);
                                     menuNum = input.nextInt();
                                     input.nextLine();
-                                    switch (menuNum){
-                                        case 1:{
+                                    switch (menuNum) {
+                                        case 1: {
                                             System.out.print("Enter the course number: ");
                                             menuNum = input.nextInt();
                                             input.nextLine();
-                                            courses.remove(menuNum-1);
-                                            tmpStudent.setCourses((Set<Course>) courses);
+                                            courses.remove(menuNum - 1);
+                                            tmpStudent.setCourses(new HashSet<>(courses));
                                             studentService.saveOrUpdate(tmpStudent);
                                             break;
                                         }
-                                        case 2:{
+                                        case 2: {
+                                            courses = courseService.getAll();
                                             for (int i = 0; i < courses.size(); i++) {
                                                 Course tmpCourse = courses.get(i);
-                                                System.out.println((i+1)+"-"+ tmpCourse.getName()
-                                                +"   |   Units: "+tmpCourse.getUnit());
+                                                System.out.println((i + 1) + "-" + tmpCourse.getName()
+                                                        + "   |   Units: " + tmpCourse.getUnit());
                                             }
                                             System.out.print("\nEnter a course number to add: ");
                                             menuNum = input.nextInt();
                                             input.nextLine();
-                                            Set<Course> courseSet = (Set<Course>) courses;
-                                            courseSet.add(courses.get(menuNum-1));
+                                            Set<Course> courseSet = new HashSet<>(courses);
+                                            courseSet.add(courses.get(menuNum - 1));
                                             tmpStudent.setCourses(courseSet);
                                             studentService.saveOrUpdate(tmpStudent);
                                             break;
@@ -206,6 +212,115 @@ public class Main {
                                     break;
                                 }
                             }
+                            break;
+                        }
+                        case 2: {
+                            System.out.print("Enter a name: ");
+                            String name = input.nextLine();
+                            System.out.print("Enter a family name: ");
+                            String family = input.nextLine();
+                            System.out.println("Choose a major:");
+                            List<Major> majors = majorService.getAll();
+                            for (int i = 0; i < majors.size(); i++) {
+                                Major tmpMajor = majors.get(i);
+                                System.out.println((i + 1) + "-" + tmpMajor.getName());
+                            }
+                            menuNum = input.nextInt();
+                            input.nextLine();
+                            Major major = majors.get(menuNum - 1);
+                            System.out.println("Add courses now? (y/n)");
+                            String result = input.nextLine();
+                            List<Course> courseList = new ArrayList<>();
+                            if (result.equals("y")) {
+                                List<Course> courses = courseService.getAll();
+                                for (int i = 0; i < courses.size(); i++) {
+                                    Course tmpCourse = courses.get(i);
+                                    System.out.println((i + 1) + "-" + tmpCourse.getName()
+                                            + "   |   Units: " + tmpCourse.getUnit());
+                                }
+                                System.out.print("\nEnter course number to add (0 to end): ");
+                                menuNum = 1;
+                                while (menuNum != 0) {
+                                    menuNum = input.nextInt();
+                                    input.nextLine();
+                                    if (menuNum != 0)
+                                        courseList.add(courses.get(menuNum - 1));
+                                }
+                                System.out.println("End");
+                            }
+                            Student student = Student.builder()
+                                    .name(name)
+                                    .familyName(family)
+                                    .major(major)
+                                    .courses(new HashSet<>(courseList))
+                                    .build();
+                            studentService.saveOrUpdate(student);
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 3: {
+                    System.out.println("""
+                                                        
+                            1-Show majors
+                            2-Add major
+                            3-Back
+                            """);
+                    menuNum = input.nextInt();
+                    input.nextLine();
+                    switch (menuNum) {
+                        case 1: {
+                            List<Major> majors = majorService.getAll();
+                            for (int i = 0; i < majors.size(); i++) {
+                                Major tmpMajor = majors.get(i);
+                                System.out.println((i + 1) + "-" + tmpMajor.getName());
+                            }
+                            System.out.println("""
+                                                                        
+                                    1-Edit a major
+                                    2-Delete a major
+                                    3-Back
+                                    """);
+                            menuNum = input.nextInt();
+                            input.nextLine();
+                            switch (menuNum) {
+                                case 1: {
+                                    System.out.print("Enter the major number: ");
+                                    menuNum = input.nextInt();
+                                    input.nextLine();
+                                    System.out.print("Enter a new name for this major: ");
+                                    String name = input.nextLine();
+                                    Major major = majors.get(menuNum - 1);
+                                    major.setName(name);
+                                    majorService.saveOrUpdate(major);
+                                    break;
+                                }
+                                case 2: {
+                                    System.out.print("Enter the major number: ");
+                                    menuNum = input.nextInt();
+                                    input.nextLine();
+                                    System.out.println("Are you sure to delete this major? (y/n)");
+                                    String result = input.nextLine();
+                                    if (!result.equals("y")) {
+                                        System.out.println("Canceled!");
+                                        break;
+                                    }
+                                    Major major = majors.get(menuNum - 1);
+                                    majorService.delete(major);
+                                    System.out.println("Deleted!");
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 2: {
+                            System.out.print("Enter a name: ");
+                            String name = input.nextLine();
+                            Major major = Major.builder()
+                                    .name(name)
+                                    .build();
+                            majorService.saveOrUpdate(major);
                             break;
                         }
                     }
