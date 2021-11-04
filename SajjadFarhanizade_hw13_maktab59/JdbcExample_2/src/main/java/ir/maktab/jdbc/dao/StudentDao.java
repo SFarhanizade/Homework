@@ -27,7 +27,7 @@ public class StudentDao implements BaseDao<Student, Integer> {
             connection = dataSourceConfig.createDataSource().getConnection();
             try (
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO Student " +
-                            "(name, familyName, m_id_fk) " +
+                            "(name, familyName, majorId) " +
                             "VALUES(?, ?, ?)");) {
                 ps.setString(1, entity.getName());
                 ps.setString(2, entity.getFamilyName());
