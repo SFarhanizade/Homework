@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 public class StudentDao implements BaseDao<Student, Integer> {
 
     private final DataSourceConfig dataSourceConfig = DataSourceConfig.getInstance();
@@ -28,11 +30,21 @@ public class StudentDao implements BaseDao<Student, Integer> {
             try (
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO Student " +
                             "(name, familyName, majorId) " +
-                            "VALUES(?, ?, ?)");) {
+                            "VALUES(?, ?, ?)",PreparedStatement.RETURN_GENERATED_KEYS);) {
                 ps.setString(1, entity.getName());
                 ps.setString(2, entity.getFamilyName());
                 ps.setInt(3, entity.getMajor().getId());
                 ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                int id = rs.getInt(1);
+                try (PreparedStatement psCourse= connection.prepareStatement("Insert Into StudentCourse (studentId, courseId) " +
+                        "Values(" + id + ",?)")) {
+                    for (Course course : entity.getCourses()){
+                        psCourse.setInt(1,course.getId());
+                        psCourse.executeUpdate();
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
