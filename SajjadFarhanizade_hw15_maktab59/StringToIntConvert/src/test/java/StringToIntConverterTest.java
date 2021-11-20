@@ -10,7 +10,7 @@ class StringToIntConverterTest {
     }
 
     @Test
-    void test_invalid_input(){
+    void test_invalid_input_empty_string(){
         try {
             StringToIntConverter.convert("");
             fail("Error expected!");
