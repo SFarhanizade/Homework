@@ -1,4 +1,16 @@
 package dao;
 
-public class AccountDao {
+import entity.Account;
+
+import javax.persistence.EntityManager;
+
+public class AccountDao extends BaseDao<Account,String> {
+    public AccountDao(EntityManager entityManager) {
+        super(entityManager);
+    }
+
+    @Override
+    public Class<Account> getEntityClass() {
+        return Account.class;
+    }
 }

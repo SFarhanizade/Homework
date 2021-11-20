@@ -1,4 +1,16 @@
 package dao;
 
-public class EmployeeDao {
+import entity.Employee;
+
+import javax.persistence.EntityManager;
+
+public class EmployeeDao extends BaseDao<Employee,String> {
+    public EmployeeDao(EntityManager entityManager) {
+        super(entityManager);
+    }
+
+    @Override
+    public Class<Employee> getEntityClass() {
+        return null;
+    }
 }
