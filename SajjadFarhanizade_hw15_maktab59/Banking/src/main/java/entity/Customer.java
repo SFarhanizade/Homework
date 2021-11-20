@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,8 @@ public class Customer implements  BaseEntity<String>{
 
     @OneToMany(mappedBy ="customer", cascade = CascadeType.ALL)
     private Set<Account> accounts;
+
+
 
     public Customer() {
 
@@ -49,5 +52,37 @@ public class Customer implements  BaseEntity<String>{
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public static class CustomerBuilder{
+        private String name;
+        private Set<Account> accounts;
+
+        public CustomerBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CustomerBuilder accounts(Set<Account> accounts) {
+            this.accounts = accounts;
+            return this;
+        }
+
+        public Customer build(){
+            return new Customer(name,accounts);
+        }
     }
 }
