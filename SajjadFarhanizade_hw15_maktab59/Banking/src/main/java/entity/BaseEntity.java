@@ -1,4 +1,6 @@
 package entity;
 
-public class BaseEntity {
+public interface BaseEntity<ID> {
+    void setId(ID id);
+    ID getId();
 }
