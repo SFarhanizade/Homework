@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class CreditCard implements  BaseEntity<String>{
+public class CreditCard implements  BaseEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_number",length = 16)
-    private String number;
+    private Long number;
 
     @Column(name = "card_cvv")
     private String cvv;
@@ -35,12 +35,12 @@ public class CreditCard implements  BaseEntity<String>{
     }
 
     @Override
-    public void setId(String s) {
+    public void setId(Long s) {
 
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return number;
     }
 

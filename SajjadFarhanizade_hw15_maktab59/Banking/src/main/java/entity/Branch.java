@@ -5,12 +5,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Branch implements BaseEntity<String> {
+public class Branch implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "branch_id")
-    private String id;
+    private Long id;
 
     @Column(name = "branch_name")
     private String name;
@@ -36,12 +36,12 @@ public class Branch implements BaseEntity<String> {
     }
 
     @Override
-    public void setId(String s) {
+    public void setId(Long s) {
 
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

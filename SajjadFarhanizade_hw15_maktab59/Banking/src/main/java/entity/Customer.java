@@ -5,12 +5,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Customer implements  BaseEntity<String>{
+public class Customer implements  BaseEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private String id;
+    private Long id;
 
     @Column(name = "customer_name")
     private String name;
@@ -25,11 +25,11 @@ public class Customer implements  BaseEntity<String>{
     }
 
     @Override
-    public void setId(String id) {
+    public void setId(Long id) {
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -65,6 +65,10 @@ public class Customer implements  BaseEntity<String>{
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public static CustomerBuilder builder() {
+        return new CustomerBuilder();
     }
 
     public static class CustomerBuilder{

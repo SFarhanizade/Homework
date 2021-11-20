@@ -4,7 +4,7 @@ import entity.CreditCard;
 
 import javax.persistence.EntityManager;
 
-public class CreditCardDao extends BaseDao<CreditCard,String>{
+public class CreditCardDao extends BaseDao<CreditCard,Long>{
     public CreditCardDao(EntityManager entityManager) {
         super(entityManager);
     }

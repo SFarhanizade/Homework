@@ -5,23 +5,23 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-public class Transaction implements BaseEntity<String>,Comparable<Transaction>{
+public class Transaction implements BaseEntity<Long>,Comparable<Transaction>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
-    private String id;
+    private Long id;
 
     @Basic
     @Column(name = "transaction_dateTime", nullable = false)
     private Timestamp timestamp;
 
-    @OneToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "account_origin", nullable = false)
     private Account origin;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
+    @ManyToOne
+    @JoinColumn(name = "account_dest")
     private Account destination;
 
     @Column(name = "transaction_amount", nullable = false)
@@ -39,12 +39,12 @@ public class Transaction implements BaseEntity<String>,Comparable<Transaction>{
     }
 
     @Override
-    public void setId(String s) {
+    public void setId(Long s) {
 
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

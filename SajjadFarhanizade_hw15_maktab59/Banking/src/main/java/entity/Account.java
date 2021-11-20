@@ -5,12 +5,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Account implements BaseEntity<String> {
+public class Account implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_number")
-    private String number;
+    private Long number;
 
     @Column(name = "account_balance")
     private Integer balance;
@@ -27,8 +27,11 @@ public class Account implements BaseEntity<String> {
     private CreditCard creditCard;
 
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL)
+    private Set<Transaction> origin;
+
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
+    private Set<Transaction> dest;
 
     @ManyToOne
     @JoinColumn(name = "branch_id", nullable = false)
@@ -47,12 +50,12 @@ public class Account implements BaseEntity<String> {
     }
 
     @Override
-    public void setId(String s) {
+    public void setId(Long s) {
 
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return number;
     }
 
@@ -88,12 +91,19 @@ public class Account implements BaseEntity<String> {
         this.creditCard = creditCard;
     }
 
-    public Set<Transaction> getTransactions() {
-        return transactions;
+    public Set<Transaction> getOriginTransactions() {
+        return origin;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
+    public Set<Transaction> getDestTransactions() {
+        return dest;
+    }
+
+    public void setOriginTransactions(Set<Transaction> transactions) {
+        this.origin = transactions;
+    }
+    public void setDestTransactions(Set<Transaction> transactions) {
+        this.dest = transactions;
     }
 
     public Branch getBranch() {
@@ -114,7 +124,7 @@ public class Account implements BaseEntity<String> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, balance, isLocked, customer, creditCard, transactions, branch);
+        return Objects.hash(number, balance, isLocked, customer, creditCard, origin, dest, branch);
     }
 
     public static AccountBuilder builder(){

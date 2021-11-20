@@ -4,7 +4,7 @@ import entity.Account;
 
 import javax.persistence.EntityManager;
 
-public class AccountDao extends BaseDao<Account,String> {
+public class AccountDao extends BaseDao<Account,Long> {
     public AccountDao(EntityManager entityManager) {
         super(entityManager);
     }

@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Employee implements  BaseEntity<String>{
+public class Employee implements  BaseEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(name = "employee_name")
     private String name;
@@ -31,12 +31,12 @@ public class Employee implements  BaseEntity<String>{
     }
 
     @Override
-    public void setId(String s) {
+    public void setId(Long s) {
 
     }
 
     @Override
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
