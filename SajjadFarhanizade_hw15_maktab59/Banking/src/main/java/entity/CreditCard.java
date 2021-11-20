@@ -19,7 +19,7 @@ public class CreditCard implements  BaseEntity<String>{
     @Column(name = "card_expDate")
     private String expDate;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "account_number")
     private Account account;
 
@@ -66,4 +66,34 @@ public class CreditCard implements  BaseEntity<String>{
     public void setExpDate(String expDate) {
         this.expDate = expDate;
     }
+
+    public static CreditCardBuilder builder(){
+        return new CreditCardBuilder();
+    }
+
+    public static class CreditCardBuilder{
+        private String cvv;
+        private String pin;
+        private String expDate;
+
+        public CreditCardBuilder cvv(String cvv) {
+            this.cvv = cvv;
+            return this;
+        }
+
+        public CreditCardBuilder pin(String pin) {
+            this.pin = pin;
+            return this;
+        }
+
+        public CreditCardBuilder expDate(String expDate) {
+            this.expDate = expDate;
+            return this;
+        }
+
+        public CreditCard build() {
+            return new CreditCard(cvv,pin,expDate);
+        }
+    }
+
 }

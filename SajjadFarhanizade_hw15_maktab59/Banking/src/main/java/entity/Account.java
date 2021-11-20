@@ -21,17 +21,24 @@ public class Account implements BaseEntity<String> {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private Set<CreditCard> creditCards;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_number")
+    private CreditCard creditCard;
 
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
 
+    @ManyToOne
+    @JoinColumn(name = "branch_id", nullable = false)
+    private Branch branch;
 
-    public Account(Integer balance, Customer customer, Set<CreditCard> creditCards, Set<Transaction> transactions) {
+
+    public Account(Integer balance, boolean isLocked, Customer customer, Branch branch) {
         this.balance = balance;
+        this.isLocked = isLocked;
         this.customer = customer;
+        this.branch = branch;
     }
 
     public Account() {
@@ -72,12 +79,12 @@ public class Account implements BaseEntity<String> {
         this.customer = customer;
     }
 
-    public Set<CreditCard> getCreditCards() {
-        return creditCards;
+    public CreditCard getCreditCards() {
+        return creditCard;
     }
 
-    public void setCreditCards(Set<CreditCard> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCards(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
     public Set<Transaction> getTransactions() {
@@ -86,5 +93,42 @@ public class Account implements BaseEntity<String> {
 
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public static AccountBuilder builder(){
+        return new AccountBuilder();
+    }
+
+    public static class AccountBuilder{
+        private Integer balance;
+        private Customer customer;
+        private Branch branch;
+
+        public AccountBuilder balance(Integer balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        public AccountBuilder customer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public AccountBuilder branch(Branch branch) {
+            this.branch = branch;
+            return this;
+        }
+
+        public Account build(){
+            return new Account(balance,false,customer,branch);
+        }
     }
 }
