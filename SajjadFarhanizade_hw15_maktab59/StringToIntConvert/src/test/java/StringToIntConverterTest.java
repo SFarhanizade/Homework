@@ -28,4 +28,14 @@ class StringToIntConverterTest {
             assertEquals("The input shouldn't have any space",e.getMessage());
         }
     }
+
+    @Test
+    void test_invalid_input_contains_characters() {
+        try {
+            StringToIntConverter.convert("abc");
+            fail("Error expected!");
+        } catch (IllegalArgumentException e){
+            assertEquals("The input shouldn't have any characters except numbers",e.getMessage());
+        }
+    }
 }
