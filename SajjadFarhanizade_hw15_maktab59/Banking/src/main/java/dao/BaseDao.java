@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class BaseDao<T extends BaseEntity<U>,U> {
+public abstract class BaseDao<T extends BaseEntity<ID>, ID> {
     EntityManager entityManager;
 
     public BaseDao(EntityManager entityManager) {
@@ -23,7 +23,7 @@ public abstract class BaseDao<T extends BaseEntity<U>,U> {
     public  void delete(T entity){
         entityManager.remove(entity);
     }
-    public T loadById(U id){
+    public T loadById(ID id){
         return entityManager.find(getEntityClass(),id);
     }
 
