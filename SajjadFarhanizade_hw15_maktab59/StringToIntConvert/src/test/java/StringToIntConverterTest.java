@@ -10,5 +10,12 @@ class StringToIntConverterTest {
     }
 
     @Test
-    void
+    void test_invalid_input(){
+        try {
+            StringToIntConverter.convert("");
+            fail("Error expected!");
+        } catch (IllegalArgumentException e){
+            assertEquals("The input shouldn't be empty",e.getMessage());
+        }
+    }
 }
