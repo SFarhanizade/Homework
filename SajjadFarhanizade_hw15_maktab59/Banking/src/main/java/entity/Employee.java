@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Employee implements  BaseEntity<String>{
@@ -53,6 +54,19 @@ public class Employee implements  BaseEntity<String>{
 
     public void setBranch(Branch branch) {
         this.branch = branch;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public static EmployeeBuilder bulider(){

@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -101,6 +102,19 @@ public class Account implements BaseEntity<String> {
 
     public void setBranch(Branch branch) {
         this.branch = branch;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return number.equals(account.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, balance, isLocked, customer, creditCard, transactions, branch);
     }
 
     public static AccountBuilder builder(){

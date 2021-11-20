@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class CreditCard implements  BaseEntity<String>{
@@ -65,6 +66,19 @@ public class CreditCard implements  BaseEntity<String>{
 
     public void setExpDate(String expDate) {
         this.expDate = expDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreditCard that = (CreditCard) o;
+        return Objects.equals(number, that.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 
     public static CreditCardBuilder builder(){
