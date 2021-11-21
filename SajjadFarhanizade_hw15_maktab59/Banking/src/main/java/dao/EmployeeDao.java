@@ -11,6 +11,6 @@ public class EmployeeDao extends BaseDao<Employee,Long> {
 
     @Override
     public Class<Employee> getEntityClass() {
-        return null;
+        return Employee.class;
     }
 }
