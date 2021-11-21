@@ -14,16 +14,11 @@ public class Employee implements  BaseEntity<Long>{
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "branch_id")
     private Branch branch;
 
     public Employee(String name, Branch branch) {
         this.name = name;
         this.branch = branch;
-    }
-
-    public Employee(String name) {
-        this.name = name;
     }
 
     public Employee() {
@@ -61,7 +56,7 @@ public class Employee implements  BaseEntity<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
+        return id.equals(employee.id) && name.equals(employee.name);
     }
 
     @Override

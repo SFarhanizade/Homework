@@ -20,9 +20,6 @@ public class CreditCard implements  BaseEntity<Long>{
     @Column(name = "card_expDate")
     private String expDate;
 
-    @OneToOne
-    @JoinColumn(name = "account_number")
-    private Account account;
 
     public CreditCard(String cvv, String pin, String expDate) {
         this.cvv = cvv;

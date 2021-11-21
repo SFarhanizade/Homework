@@ -19,11 +19,13 @@ public class Account implements BaseEntity<Long> {
     private boolean isLocked = false;
 
     @ManyToOne
+    private Branch branch;
+
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_number")
     private CreditCard creditCard;
 
 
@@ -32,10 +34,6 @@ public class Account implements BaseEntity<Long> {
 
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private Set<Transaction> dest;
-
-    @ManyToOne
-    @JoinColumn(name = "branch_id", nullable = false)
-    private Branch branch;
 
 
     public Account(Integer balance, boolean isLocked, Customer customer, Branch branch) {
@@ -91,6 +89,14 @@ public class Account implements BaseEntity<Long> {
         this.creditCard = creditCard;
     }
 
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
     public Set<Transaction> getOriginTransactions() {
         return origin;
     }
@@ -102,17 +108,11 @@ public class Account implements BaseEntity<Long> {
     public void setOriginTransactions(Set<Transaction> transactions) {
         this.origin = transactions;
     }
+
     public void setDestTransactions(Set<Transaction> transactions) {
         this.dest = transactions;
     }
 
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -124,14 +124,14 @@ public class Account implements BaseEntity<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, balance, isLocked, customer, creditCard, origin, dest, branch);
+        return Objects.hash(number, balance, isLocked, customer, branch, creditCard, origin, dest);
     }
 
-    public static AccountBuilder builder(){
+    public static AccountBuilder builder() {
         return new AccountBuilder();
     }
 
-    public static class AccountBuilder{
+    public static class AccountBuilder {
         private Integer balance;
         private Customer customer;
         private Branch branch;
@@ -151,8 +151,8 @@ public class Account implements BaseEntity<Long> {
             return this;
         }
 
-        public Account build(){
-            return new Account(balance,false,customer,branch);
+        public Account build() {
+            return new Account(balance, false, customer, branch);
         }
     }
 }

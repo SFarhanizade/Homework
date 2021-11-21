@@ -17,11 +17,10 @@ public class Transaction implements BaseEntity<Long>,Comparable<Transaction>{
     private Timestamp timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "account_origin", nullable = false)
+    @JoinColumn(nullable = false)
     private Account origin;
 
     @ManyToOne
-    @JoinColumn(name = "account_dest")
     private Account destination;
 
     @Column(name = "transaction_amount", nullable = false)

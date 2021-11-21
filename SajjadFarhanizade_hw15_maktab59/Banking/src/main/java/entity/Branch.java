@@ -15,6 +15,10 @@ public class Branch implements BaseEntity<Long> {
     @Column(name = "branch_name")
     private String name;
 
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "boss_id")
+    private Employee boss;*/
+
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
@@ -25,10 +29,11 @@ public class Branch implements BaseEntity<Long> {
         this.name = name;
     }
 
-    public Branch(String name, Set<Account> accounts, Set<Employee> employees) {
+    public Branch(String name, Set<Account> accounts, Set<Employee> employees) { //Employee boss) {
         this.name = name;
         this.accounts = accounts;
         this.employees = employees;
+        //this.boss = boss;
     }
 
     public Branch() {
@@ -69,6 +74,14 @@ public class Branch implements BaseEntity<Long> {
         this.employees = employees;
     }
 
+   /* public Employee getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Employee boss) {
+        this.boss = boss;
+    }*/
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,14 +95,15 @@ public class Branch implements BaseEntity<Long> {
         return Objects.hash(id);
     }
 
-    public static BranchBuilder builder(){
+    public static BranchBuilder builder() {
         return new BranchBuilder();
     }
 
-    public static class BranchBuilder{
+    public static class BranchBuilder {
         private String name;
         private Set<Account> accounts;
         private Set<Employee> employees;
+        private Employee boss;
 
         public BranchBuilder name(String name) {
             this.name = name;
@@ -106,8 +120,13 @@ public class Branch implements BaseEntity<Long> {
             return this;
         }
 
-        public Branch build(){
-            return new Branch(name,accounts,employees);
+        public BranchBuilder boss(Employee boss) {
+            this.boss = boss;
+            return this;
+        }
+
+        public Branch build() {
+            return new Branch(name, accounts, employees);//,boss);
         }
     }
 
