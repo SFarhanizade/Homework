@@ -14,21 +14,38 @@ public abstract class BaseDao<T extends BaseEntity<ID>, ID> {
         this.entityManager = entityManager;
     }
 
-    public  void save(T entity){
+    public void save(T entity) {
+        entityManager.getTransaction().begin();
         entityManager.persist(entity);
-    }
-    public  void update(T entity){
-        entityManager.merge(entity);
-    }
-    public  void delete(T entity){
-        entityManager.remove(entity);
-    }
-    public T loadById(ID id){
-        return entityManager.find(getEntityClass(),id);
+        entityManager.getTransaction().commit();
     }
 
-    public Set<T> loadAll(){
-        return new HashSet<T>((Collection<? extends T>) entityManager.createQuery("From "+ getEntityClass().getSimpleName()));
+    public void update(T entity) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
     }
+
+    public void delete(T entity) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    public T loadById(ID id) {
+        entityManager.getTransaction().begin();
+        T result = entityManager.find(getEntityClass(), id);
+        entityManager.getTransaction().commit();
+        return result;
+    }
+
+    public Set<T> loadAll() {
+        entityManager.getTransaction().begin();
+        Set<T> result = new HashSet<T>(entityManager.createQuery("From " +
+                getEntityClass().getSimpleName()).getResultList());
+        entityManager.getTransaction().commit();
+        return result;
+    }
+
     public abstract Class<T> getEntityClass();
 }
