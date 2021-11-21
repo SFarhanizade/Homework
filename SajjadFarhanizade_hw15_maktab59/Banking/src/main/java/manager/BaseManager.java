@@ -8,14 +8,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.Set;
 
-public class BaseManager<T extends BaseEntity<ID>, ID extends String> {
-    EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("jpa-bank");
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+public class BaseManager<T extends BaseEntity<ID>, ID> {
+    protected EntityManager entityManager;
+
+    public BaseManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     protected BaseDao baseDao;
 
-    public BaseManager(BaseDao baseDao) {
+    public void setBaseDao(BaseDao baseDao) {
         this.baseDao = baseDao;
     }
 
