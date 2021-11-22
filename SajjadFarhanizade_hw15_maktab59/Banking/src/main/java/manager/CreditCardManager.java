@@ -69,7 +69,7 @@ public class CreditCardManager extends BaseManager<CreditCard,Integer>{
     }
 
     public boolean cardIsValid(CreditCard creditCard) throws CardNotExistsException, WrongPasswordException, WrongExpDateException {
-        CreditCard card = loadById(creditCard.getId());
+        CreditCard card = loadByNumber(creditCard.getNumber());
         if(card==null)
             throw new CardNotExistsException("Card doesn't exist!");
         if(creditCard.getPin()!=card.getPin())
