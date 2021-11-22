@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class CreditCard implements  BaseEntity<Long>{
+
+public class CreditCard implements  BaseEntity<Integer>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_number",length = 16)
-    private Long number;
+    @Column(name = "card_id")
+    private Integer id;
+
+    @Column(name = "card_number")
+    private String number;
 
     @Column(name = "card_cvv")
     private String cvv;
@@ -24,7 +28,8 @@ public class CreditCard implements  BaseEntity<Long>{
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public CreditCard(String cvv, String pin, String expDate, Account account) {
+    public CreditCard(String number,String cvv, String pin, String expDate, Account account) {
+        this.number = number;
         this.cvv = cvv;
         this.pin = pin;
         this.expDate = expDate;
@@ -35,14 +40,21 @@ public class CreditCard implements  BaseEntity<Long>{
 
     }
 
-    @Override
-    public void setId(Long s) {
+    public String getNumber() {
+        return number;
+    }
 
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     @Override
-    public Long getId() {
-        return number;
+    public void setId(Integer s) {
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 
     public String getCvv() {
@@ -82,12 +94,12 @@ public class CreditCard implements  BaseEntity<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreditCard that = (CreditCard) o;
-        return Objects.equals(number, that.number);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number);
+        return Objects.hash(id);
     }
 
     public static CreditCardBuilder builder(){
@@ -95,10 +107,16 @@ public class CreditCard implements  BaseEntity<Long>{
     }
 
     public static class CreditCardBuilder{
+        private String number;
         private String cvv;
         private String pin;
         private String expDate;
         private Account account;
+
+        public CreditCardBuilder number(String number) {
+            this.number = number;
+            return this;
+        }
 
         public CreditCardBuilder cvv(String cvv) {
             this.cvv = cvv;
@@ -121,7 +139,7 @@ public class CreditCard implements  BaseEntity<Long>{
         }
 
         public CreditCard build() {
-            return new CreditCard(cvv,pin,expDate,account);
+            return new CreditCard(number,cvv,pin,expDate,account);
         }
     }
 
