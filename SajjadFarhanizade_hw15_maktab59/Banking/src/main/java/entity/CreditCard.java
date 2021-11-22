@@ -28,6 +28,11 @@ public class CreditCard implements  BaseEntity<Integer>{
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @Column(name = "card_wrongPin")
+    private Integer countWrongPin;
+
+
+
     public CreditCard(String number,String cvv, String pin, String expDate, Account account) {
         this.number = number;
         this.cvv = cvv;
@@ -38,6 +43,14 @@ public class CreditCard implements  BaseEntity<Integer>{
 
     public CreditCard() {
 
+    }
+
+    public Integer getCountWrongPin() {
+        return countWrongPin;
+    }
+
+    public void setCountWrongPin(Integer countWrongPin) {
+        this.countWrongPin = countWrongPin;
     }
 
     public String getNumber() {
