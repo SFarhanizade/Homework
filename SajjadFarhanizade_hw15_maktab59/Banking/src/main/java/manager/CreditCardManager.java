@@ -25,14 +25,18 @@ public class CreditCardManager extends BaseManager<CreditCard, Integer> {
         return query.getSingleResult();
     }
 
-    public boolean transferIsValid(String origin, String destination, Integer amount) throws CardNotExistsException, NotEnoughBalanceException {
+    public boolean transferIsValid(String origin, String destination, Integer amount) throws CardNotExistsException, NotEnoughBalanceException, WrongAmountException {
+        if(origin.length()!=16 || destination.length()!=16)
+            throw new IllegalArgumentException("Card number length should be 16!");
+        if(amount<=0)
+            throw new WrongAmountException("The amount should be more than 0!");
         CreditCard originCreditCard = loadByNumber(origin);
         if (originCreditCard == null)
             throw new CardNotExistsException("Origin card number doesn't exist!");
         CreditCard destCreditCard = loadByNumber(destination);
         if (destCreditCard == null)
             throw new CardNotExistsException("Destination card number doesn't exist!");
-        boolean hasMoney = originCreditCard.getAccount().getBalance() >= amount;
+        boolean hasMoney = originCreditCard.getAccount().getBalance() >= amount+600;
         if (originCreditCard.getAccount().getBalance() < amount)
             throw new NotEnoughBalanceException("Not enough balance!");
         return true;
