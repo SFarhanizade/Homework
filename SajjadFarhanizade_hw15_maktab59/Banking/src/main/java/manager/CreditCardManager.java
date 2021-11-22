@@ -10,20 +10,30 @@ import exception.WrongExpDateException;
 import exception.WrongPasswordException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.sql.Timestamp;
 
-public class CreditCardManager extends BaseManager<CreditCard,Long>{
+public class CreditCardManager extends BaseManager<CreditCard,Integer>{
+
+
 
     public CreditCardManager(EntityManager entityManager) {
         super(entityManager);
         setBaseDao(new CreditCardDao(entityManager));
     }
 
-    public boolean transferIsValid(Long origin, Long destination, Integer amount) throws CardNotExistsException, NotEnoughBalanceException {
-        CreditCard originCreditCard = loadById(origin);
+    public CreditCard loadByNumber(String number){
+        TypedQuery<CreditCard> query =
+                entityManager.createQuery("From CreditCard c where c.number = :number", CreditCard.class);
+        query.setParameter("number", number);
+        return query.getSingleResult();
+    }
+
+    public boolean transferIsValid(String origin, String destination, Integer amount) throws CardNotExistsException, NotEnoughBalanceException {
+        CreditCard originCreditCard = loadByNumber(origin);
         if(originCreditCard==null)
             throw new CardNotExistsException("Origin card number doesn't exist!");
-        CreditCard destCreditCard = loadById(destination);
+        CreditCard destCreditCard = loadByNumber(destination);
         if(destCreditCard==null)
             throw new CardNotExistsException("Destination card number doesn't exist!");
         boolean hasMoney = originCreditCard.getAccount().getBalance()>=amount;
@@ -33,10 +43,10 @@ public class CreditCardManager extends BaseManager<CreditCard,Long>{
 
     }
 
-    public void transfer(CreditCard origin, Long destination, Integer amount){
+    public void transfer(CreditCard origin, String destination, Integer amount){
         Account originAccount = origin.getAccount();
         originAccount.setBalance(originAccount.getBalance()-(amount+600));
-        Account destAccount = loadById(destination).getAccount();
+        Account destAccount = loadByNumber(destination).getAccount();
         destAccount.setBalance(destAccount.getBalance()+amount);
         Transaction transaction = Transaction.builder()
                 .origin(originAccount)
