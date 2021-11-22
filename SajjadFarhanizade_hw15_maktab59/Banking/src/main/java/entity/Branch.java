@@ -22,8 +22,15 @@ public class Branch implements BaseEntity<Long> {
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="branch")
     private Set<Employee> employees;
+
+
+
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
 
     public Branch(String name) {
         this.name = name;
@@ -64,10 +71,6 @@ public class Branch implements BaseEntity<Long> {
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
-    }
-
-    public Set<Employee> getEmployees() {
-        return employees;
     }
 
     public void setEmployees(Set<Employee> employees) {

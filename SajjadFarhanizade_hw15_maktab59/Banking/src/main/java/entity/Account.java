@@ -19,13 +19,14 @@ public class Account implements BaseEntity<Long> {
     private boolean isLocked = false;
 
     @ManyToOne
+    @JoinColumn(name = "branch_id")
     private Branch branch;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy="account")
     private CreditCard creditCard;
 
 

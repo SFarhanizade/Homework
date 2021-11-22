@@ -43,6 +43,7 @@ public class Employee implements  BaseEntity<Long>{
         this.name = name;
     }
 
+
     public Branch getBranch() {
         return branch;
     }

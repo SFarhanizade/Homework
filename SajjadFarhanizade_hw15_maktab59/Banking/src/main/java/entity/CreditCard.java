@@ -20,11 +20,15 @@ public class CreditCard implements  BaseEntity<Long>{
     @Column(name = "card_expDate")
     private String expDate;
 
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-    public CreditCard(String cvv, String pin, String expDate) {
+    public CreditCard(String cvv, String pin, String expDate, Account account) {
         this.cvv = cvv;
         this.pin = pin;
         this.expDate = expDate;
+        this.account = account;
     }
 
     public CreditCard() {
@@ -65,6 +69,14 @@ public class CreditCard implements  BaseEntity<Long>{
         this.expDate = expDate;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +98,7 @@ public class CreditCard implements  BaseEntity<Long>{
         private String cvv;
         private String pin;
         private String expDate;
+        private Account account;
 
         public CreditCardBuilder cvv(String cvv) {
             this.cvv = cvv;
@@ -102,8 +115,13 @@ public class CreditCard implements  BaseEntity<Long>{
             return this;
         }
 
+        public CreditCardBuilder account(Account account) {
+            this.account = account;
+            return this;
+        }
+
         public CreditCard build() {
-            return new CreditCard(cvv,pin,expDate);
+            return new CreditCard(cvv,pin,expDate,account);
         }
     }
 
