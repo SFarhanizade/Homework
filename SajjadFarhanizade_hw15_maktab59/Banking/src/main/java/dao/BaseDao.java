@@ -3,8 +3,11 @@ package dao;
 import entity.BaseEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class BaseDao<T extends BaseEntity<ID>, ID> {
@@ -32,6 +35,13 @@ public abstract class BaseDao<T extends BaseEntity<ID>, ID> {
         entityManager.getTransaction().commit();
     }
 
+    public void deleteAll() {
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery("Delete From " + getEntityClass().getSimpleName());
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
+    }
+
     public T loadById(ID id) {
         entityManager.getTransaction().begin();
         T result = entityManager.find(getEntityClass(), id);
@@ -48,4 +58,6 @@ public abstract class BaseDao<T extends BaseEntity<ID>, ID> {
     }
 
     public abstract Class<T> getEntityClass();
+
+
 }
