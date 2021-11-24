@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity
 
@@ -29,7 +30,7 @@ public class CreditCard implements  BaseEntity<Integer>{
     private Account account;
 
     @Column(name = "card_wrongPin")
-    private Integer countWrongPin;
+    private Integer countWrongPin = 0;
 
 
 
@@ -47,6 +48,13 @@ public class CreditCard implements  BaseEntity<Integer>{
 
     public Integer getCountWrongPin() {
         return countWrongPin;
+    }
+
+    public void enterWringPin(){
+        if(countWrongPin<2)
+            countWrongPin++;
+        else
+            account.setLocked(true);
     }
 
     public void setCountWrongPin(Integer countWrongPin) {
@@ -115,26 +123,24 @@ public class CreditCard implements  BaseEntity<Integer>{
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "CreditCard:" + '\n' +
+                "number: " + number + '\n' +
+                "cvv: " + cvv + '\n' +
+                "pin: " + pin + '\n' +
+                "expDate: " + expDate;
+    }
+
     public static CreditCardBuilder builder(){
         return new CreditCardBuilder();
     }
 
     public static class CreditCardBuilder{
-        private String number;
         private String cvv;
         private String pin;
         private String expDate;
         private Account account;
-
-        public CreditCardBuilder number(String number) {
-            this.number = number;
-            return this;
-        }
-
-        public CreditCardBuilder cvv(String cvv) {
-            this.cvv = cvv;
-            return this;
-        }
 
         public CreditCardBuilder pin(String pin) {
             this.pin = pin;
@@ -152,7 +158,9 @@ public class CreditCard implements  BaseEntity<Integer>{
         }
 
         public CreditCard build() {
-            return new CreditCard(number,cvv,pin,expDate,account);
+            Random rand = new Random();
+            cvv = Integer.toString(rand.nextInt(100,9999));
+            return new CreditCard("",cvv,pin,expDate,account);
         }
     }
 
