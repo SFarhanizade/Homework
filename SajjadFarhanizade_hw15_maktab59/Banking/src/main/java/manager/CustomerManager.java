@@ -11,4 +11,12 @@ public class CustomerManager extends BaseManager<Customer,Long>{
         super(entityManager);
         setBaseDao(new CustomerDao(entityManager));
     }
+
+    public boolean exists(String nationalId) {
+        return new CustomerDao(entityManager).exists(nationalId);
+    }
+
+    public Customer loadByNationalId(String nationalId) {
+        return new CustomerDao(entityManager).loadByNationalId(nationalId);
+    }
 }
