@@ -13,11 +13,19 @@ public class Employee implements  BaseEntity<Long>{
     @Column(name = "employee_name")
     private String name;
 
+    @Column(name = "employee_username", unique = true)
+    private String username;
+
+    @Column(name = "employee_password")
+    private String password;
+
     @ManyToOne
     private Branch branch;
 
-    public Employee(String name, Branch branch) {
+    public Employee(String name, String username, String password, Branch branch) {
         this.name = name;
+        this.username = username;
+        this.password = password;
         this.branch = branch;
     }
 
@@ -43,6 +51,21 @@ public class Employee implements  BaseEntity<Long>{
         this.name = name;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Branch getBranch() {
         return branch;
@@ -65,15 +88,27 @@ public class Employee implements  BaseEntity<Long>{
         return Objects.hash(id);
     }
 
-    public static EmployeeBuilder bulider(){
+    public static EmployeeBuilder builder(){
         return new EmployeeBuilder();
     }
     public static class EmployeeBuilder{
         private String name;
+        private String username;
+        private String password;
         private Branch branch;
 
         public EmployeeBuilder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public EmployeeBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public EmployeeBuilder password(String password) {
+            this.password = password;
             return this;
         }
 
@@ -83,7 +118,7 @@ public class Employee implements  BaseEntity<Long>{
         }
 
         public Employee build(){
-            return new Employee(name, branch);
+            return new Employee(name,username, password, branch);
         }
     }
 }
