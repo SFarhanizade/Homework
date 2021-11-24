@@ -11,4 +11,11 @@ public class EmployeeManager extends BaseManager<Employee,Long>{
         super(entityManager);
         setBaseDao(new EmployeeDao(entityManager));
     }
+
+    public Employee login(String username, String password){
+        return new EmployeeDao(entityManager).login(username, password);
+    }
+    public boolean userExists(String username){
+        return new EmployeeDao(entityManager).userExists(username);
+    }
 }
