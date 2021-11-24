@@ -5,19 +5,21 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Customer implements  BaseEntity<Long>{
+public class Customer implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
 
+    @Column(name = "customer_nationalId", unique = true)
+    private String nationalId;
+
     @Column(name = "customer_name")
     private String name;
 
-    @OneToMany(mappedBy ="customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Account> accounts;
-
 
 
     public Customer() {
@@ -33,7 +35,16 @@ public class Customer implements  BaseEntity<Long>{
         return id;
     }
 
-    public Customer(String name, Set<Account> accounts) {
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public Customer(String nationalId, String name, Set<Account> accounts) {
+        this.nationalId = nationalId;
         this.name = name;
         this.accounts = accounts;
     }
@@ -71,9 +82,15 @@ public class Customer implements  BaseEntity<Long>{
         return new CustomerBuilder();
     }
 
-    public static class CustomerBuilder{
+    public static class CustomerBuilder {
+        private String nationalId;
         private String name;
         private Set<Account> accounts;
+
+        public CustomerBuilder nationalId(String nationalId) {
+            this.nationalId = nationalId;
+            return this;
+        }
 
         public CustomerBuilder name(String name) {
             this.name = name;
@@ -85,8 +102,8 @@ public class Customer implements  BaseEntity<Long>{
             return this;
         }
 
-        public Customer build(){
-            return new Customer(name,accounts);
+        public Customer build() {
+            return new Customer(nationalId, name, accounts);
         }
     }
 }
