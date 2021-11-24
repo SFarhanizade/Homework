@@ -1,6 +1,8 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -69,6 +71,16 @@ public class Branch implements BaseEntity<Long> {
         return accounts;
     }
 
+    public List<Account> getLockedAccounts(){
+        List<Account> lockedAccounts = new ArrayList<>();
+        for(Account account : getAccounts()) {
+            if(account.isLocked())
+                lockedAccounts.add(account);
+        }
+        return lockedAccounts;
+
+    }
+
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
@@ -76,6 +88,8 @@ public class Branch implements BaseEntity<Long> {
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
+
+
 
    /* public Employee getBoss() {
         return boss;
