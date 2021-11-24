@@ -9,6 +9,7 @@ import exception.*;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class CreditCardManager extends BaseManager<CreditCard, Integer> {
 
@@ -22,7 +23,10 @@ public class CreditCardManager extends BaseManager<CreditCard, Integer> {
         TypedQuery<CreditCard> query =
                 entityManager.createQuery("From CreditCard c where c.number = :number", CreditCard.class);
         query.setParameter("number", number);
-        return query.getSingleResult();
+        List<CreditCard> result = query.getResultList();
+        if(result==null)
+            return null;
+        return result.get(0);
     }
 
     public boolean transferIsValid(String origin, String destination, Integer amount) throws CardNotExistsException, NotEnoughBalanceException, WrongAmountException {
@@ -43,7 +47,8 @@ public class CreditCardManager extends BaseManager<CreditCard, Integer> {
 
     }
 
-    public void transfer(CreditCard origin, String destination, Integer amount) {
+    public void transfer(CreditCard origin, String destination, Integer amount) throws WrongAmountException, CardNotExistsException, NotEnoughBalanceException {
+        transferIsValid(origin.getNumber(),destination,amount);
         Account originAccount = origin.getAccount();
         originAccount.setBalance(originAccount.getBalance() - (amount + 600));
         Account destAccount = loadByNumber(destination).getAccount();
@@ -91,5 +96,9 @@ public class CreditCardManager extends BaseManager<CreditCard, Integer> {
         if (creditCard.getExpDate() != card.getExpDate())
             throw new WrongExpDateException("Wrong Expiry date!");
         return true;
+    }
+
+    public CreditCard login(String number, String pin) throws WrongPasswordException, AccountIsLockedException {
+        return new CreditCardDao(entityManager).login(number, pin);
     }
 }
