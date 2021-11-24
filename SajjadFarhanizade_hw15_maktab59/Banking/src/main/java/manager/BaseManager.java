@@ -33,11 +33,15 @@ public class BaseManager<T extends BaseEntity<ID>, ID> {
         baseDao.delete(entity);
     }
 
-    public T loadById(ID id){
+    public void deleteAll() {
+        baseDao.deleteAll();
+    }
+
+    public T loadById(ID id) {
         return (T) baseDao.loadById(id);
     }
 
-    public Set<T> loadAll(){
+    public Set<T> loadAll() {
         return baseDao.loadAll();
     }
 
