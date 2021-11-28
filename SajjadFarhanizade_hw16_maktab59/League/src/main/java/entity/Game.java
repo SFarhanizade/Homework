@@ -40,6 +40,9 @@ public class Game extends BaseEntity{
             winner = team2;
         else
             winner = null;
+
+        if(winner!=null)
+            winner.setPoints(winner.getPoints()+3);
     }
 
     public Game() {
