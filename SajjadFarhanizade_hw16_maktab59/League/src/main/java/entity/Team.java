@@ -17,7 +17,7 @@ public class Team extends BaseThing{
     @OneToOne
     private Player capitan;
 
-    private Integer points;
+    private Integer points = 0;
 
     public Team() {
     }
