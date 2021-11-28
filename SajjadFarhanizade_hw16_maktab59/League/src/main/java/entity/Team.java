@@ -17,6 +17,8 @@ public class Team extends BaseThing{
     @OneToOne
     private Player capitan;
 
+    private Integer points;
+
     public Team() {
     }
 
@@ -40,5 +42,21 @@ public class Team extends BaseThing{
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public Player getCapitan() {
+        return capitan;
+    }
+
+    public void setCapitan(Player capitan) {
+        this.capitan = capitan;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 }
