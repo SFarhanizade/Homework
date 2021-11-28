@@ -11,6 +11,9 @@ public class BaseEntity {
     @GeneratedValue
     protected Long id;
 
+    public BaseEntity() {
+    }
+
     public BaseEntity(Long id) {
         this.id = id;
     }

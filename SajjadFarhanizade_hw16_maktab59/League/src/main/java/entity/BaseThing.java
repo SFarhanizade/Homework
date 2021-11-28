@@ -9,6 +9,10 @@ public class BaseThing extends BaseEntity{
     @Column
     protected String name;
 
+    public BaseThing() {
+        super();
+    }
+
     public BaseThing(Long id, String name) {
         super(id);
         this.name = name;
