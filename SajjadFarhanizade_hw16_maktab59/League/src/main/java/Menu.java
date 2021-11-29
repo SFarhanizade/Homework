@@ -34,33 +34,70 @@ public class Menu {
                     menuNum = input.nextInt();
                     input.nextLine();
                     switch (menuNum) {
-                        case 0:{
+                        case 0: {
                             break;
                         }
                         case 1: {
-                            List<City> cities = showCities();
-                            System.out.print("Choose a city to see the details or 0 to back: ");
-                            menuNum = input.nextInt();
-                            input.nextLine();
-                            if (menuNum == 0)
-                                break;
-                            showCity(cities.get(menuNum - 1));
+                            showCity(chooseCity(showCities(),
+                                    "Choose a city to see the details"));
                             break;
                         }
                         case 2: {
                             addCity();
                             break;
                         }
-                        case 3:{
+                        case 3: {
                             List<City> cities = showCities();
-                            System.out.print("Choose a city to remove or  to back: ");
-                            int answer = input.nextInt();
+                            City city = chooseCity(showCities(), "Choose a city to remove");
+                            if (city == null)
+                                break;
+                            if (!isSure())
+                                break;
+                            Main.cityManager.delete(city);
+                            System.out.println("Removed!");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 2: {
+                    System.out.println("""
+                                                        
+                            1-Show
+                            2-Add
+                            3-Remove
+                            0-Back
+                            """);
+                    menuNum = input.nextInt();
+                    input.nextLine();
+                    switch (menuNum) {
+                        case 0:{
+                            break;
+                        }
+                        case 1: {
+                            List<Stadium> stadiums = showStadiums();
+                            System.out.print("Choose a stadium to see details or 0 to back: ");
+                            menuNum = input.nextInt();
                             input.nextLine();
-                            if(answer==0)
+                            if(menuNum ==0)
+                                break;
+                            showStadium(stadiums.get(menuNum-1));
+                            break;
+                        }
+                        case 2: {
+
+                            break;
+                        }
+                        case 3: {
+                            List<Stadium> stadiums = showStadiums();
+                            System.out.print("Choose a stadium to remove or 0 to back: ");
+                            menuNum = input.nextInt();
+                            input.nextLine();
+                            if(menuNum == 0)
                                 break;
                             if(!isSure())
                                 break;
-                            Main.cityManager.delete(cities.get(answer-1));
+                            Main.stadiumManager.delete(stadiums.get(menuNum-1));
                             System.out.println("Removed!");
                             break;
                         }
@@ -72,6 +109,8 @@ public class Menu {
     }
 
     private static void showCity(City city) {
+        if (city == null)
+            return;
         System.out.println("City " + city.getName());
         System.out.println("""
                                 
@@ -133,9 +172,27 @@ public class Menu {
         return cities;
     }
 
+    private static City chooseCity(List<City> cities, String message) {
+        System.out.print(message+" or 0 to back: ");
+        int menuNum = input.nextInt();
+        input.nextLine();
+        if (menuNum == 0)
+            return null;
+        return cities.get(menuNum-1);
+    }
+
     private static List<Stadium> showStadiums(City city) {
         List<Stadium> stadiums = city.getStadiums();
         System.out.println("Stadiums in " + city.getName());
+        for (int i = 0; i < stadiums.size(); i++) {
+            System.out.println((i + 1) + "-" + stadiums.get(i).getName());
+        }
+        return stadiums;
+    }
+
+    private static List<Stadium> showStadiums() {
+        List<Stadium> stadiums = Main.stadiumManager.loadAll();
+        System.out.println("Stadium:");
         for (int i = 0; i < stadiums.size(); i++) {
             System.out.println((i + 1) + "-" + stadiums.get(i).getName());
         }
@@ -168,6 +225,17 @@ public class Menu {
                 break;
             }
         }
+    }
+
+    private static void addStadium() {
+        System.out.print("Enter a name: ");
+        String name = input.nextLine();
+
+        City city = City.builder()
+                .name(name)
+                .build();
+        Main.cityManager.save(city);
+        System.out.println("Added!");
     }
 
     private static boolean isSure() {
