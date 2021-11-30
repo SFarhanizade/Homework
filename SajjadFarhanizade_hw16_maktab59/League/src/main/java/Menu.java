@@ -1,8 +1,5 @@
-import entity.BaseEntity;
-import entity.City;
-import entity.Stadium;
+import entity.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,9 +12,9 @@ public class Menu {
             System.out.println("""
                     1-City
                     2-Stadium
-                    3-player
+                    3-Team
                     4-Coach
-                    5-Team
+                    5-Player
                     6-Game
                     """);
             int menuNum = input.nextInt();
@@ -47,7 +44,6 @@ public class Menu {
                             break;
                         }
                         case 3: {
-                            List<City> cities = showCities();
                             City city = chooseCity(showCities(), "Choose a city to remove");
                             if (city == null)
                                 break;
@@ -71,39 +67,51 @@ public class Menu {
                     menuNum = input.nextInt();
                     input.nextLine();
                     switch (menuNum) {
-                        case 0:{
+                        case 0: {
                             break;
                         }
                         case 1: {
-                            List<Stadium> stadiums = showStadiums();
-                            System.out.print("Choose a stadium to see details or 0 to back: ");
-                            menuNum = input.nextInt();
-                            input.nextLine();
-                            if(menuNum ==0)
-                                break;
-                            showStadium(stadiums.get(menuNum-1));
+                            showStadium(chooseStadium(showStadiums(),
+                                    "Choose a stadium to see details"));
                             break;
                         }
                         case 2: {
-
+                            addStadium();
                             break;
                         }
                         case 3: {
-                            List<Stadium> stadiums = showStadiums();
-                            System.out.print("Choose a stadium to remove or 0 to back: ");
-                            menuNum = input.nextInt();
-                            input.nextLine();
-                            if(menuNum == 0)
+                            Stadium stadium = chooseStadium(showStadiums(),
+                                    "Choose a stadium to remove");
+                            if (!isSure())
                                 break;
-                            if(!isSure())
-                                break;
-                            Main.stadiumManager.delete(stadiums.get(menuNum-1));
+                            Main.stadiumManager.delete(stadium);
                             System.out.println("Removed!");
                             break;
                         }
                     }
                     break;
                 }
+                case 3:{
+                    System.out.println("""
+                            
+                            1-Show
+                            2-Add
+                            3-Remove
+                            0-Back
+                            """);
+                    menuNum = input.nextInt();
+                    input.nextLine();
+                    switch (menuNum) {
+                        case 0: {
+                            break;
+                        }
+                        case 1:{
+
+                        }
+                    }
+                    break;
+                }
+                case
             }
         }
     }
@@ -173,12 +181,28 @@ public class Menu {
     }
 
     private static City chooseCity(List<City> cities, String message) {
-        System.out.print(message+" or 0 to back: ");
+        System.out.print(message + " or 0 to back: ");
         int menuNum = input.nextInt();
         input.nextLine();
         if (menuNum == 0)
             return null;
-        return cities.get(menuNum-1);
+        return cities.get(menuNum - 1);
+    }
+
+    private static void addStadium() {
+        System.out.print("Enter a name: ");
+        String name = input.nextLine();
+        City city = chooseCity(showCities(), "Choose a city");
+        if (city == null) {
+            System.out.println("Canceled!");
+            return;
+        }
+        Stadium stadium = Stadium.builder()
+                .name(name)
+                .city(city)
+                .build();
+        Main.stadiumManager.save(stadium);
+        System.out.println("Added!");
     }
 
     private static List<Stadium> showStadiums(City city) {
@@ -199,7 +223,19 @@ public class Menu {
         return stadiums;
     }
 
+    private static Stadium chooseStadium(List<Stadium> stadiums, String message) {
+        System.out.print(message + " or 0 to back: ");
+        int menuNum = input.nextInt();
+        input.nextLine();
+        if (menuNum == 0)
+            return null;
+        return stadiums.get(menuNum - 1);
+    }
+
     private static void showStadium(Stadium stadium) {
+        if (stadium == null)
+            return;
+        System.out.println("Stadium "+stadium.getName());
         System.out.println("""
                 1-Edit Name
                 2-Remove
@@ -227,16 +263,128 @@ public class Menu {
         }
     }
 
-    private static void addStadium() {
-        System.out.print("Enter a name: ");
-        String name = input.nextLine();
-
-        City city = City.builder()
-                .name(name)
-                .build();
-        Main.cityManager.save(city);
-        System.out.println("Added!");
+    private static List<Team> showTeams(){
+        List<Team> teams = Main.teamManager.loadAll();
+        System.out.println("Teams:");
+        for (int i = 0; i < teams.size(); i++) {
+            System.out.println((i+1)+"-"+teams.get(i).getName());
+        }
+        return teams;
     }
+
+    private static Team chooseTeam(List<Team> teams, String message){
+        System.out.print(message + " or 0 to back: ");
+        int menuNum = input.nextInt();
+        input.nextLine();
+        if (menuNum == 0)
+            return null;
+        return teams.get(menuNum - 1);
+    }
+
+    private static void showTeam(Team team){
+        System.out.println("""
+                
+                1-Players
+                2-Capitan
+                3-Coach
+                4-Points
+                5-Show games
+                6-Edit
+                7-Remove
+                0-Back
+                """);
+        int menuNum = input.nextInt();
+        switch(menuNum) {
+            case 0:{
+                break;
+            }
+            case 1:{
+                showPlayer(choosePlayer(showPlayers(team), "Choose a player"));
+                break;
+            }
+            case 2:{
+                Player capitan = chooseCapitan(team.getCapitan(), team.getPlayers());
+                if (capitan == null){
+                    System.out.println("Canceled!");
+                    return;
+                }
+                team.setCapitan(capitan);
+                Main.teamManager.update(team);
+                System.out.println("Done!");
+            }
+            case 3:{
+
+            }
+        }
+    }
+
+    private static List<Player> showPlayers(Team team) {
+        System.out.println("Players of "+team.getName()+":");
+        List<Player> players = team.getPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println((i+1)+"-"+players.get(i).getName());
+        }
+        return players;
+    }
+
+    private static Player choosePlayer(List<Player> players, String message) {
+        System.out.print(message + " or 0 to back: ");
+        int menuNum = input.nextInt();
+        input.nextLine();
+        if (menuNum == 0)
+            return null;
+        return players.get(menuNum - 1);
+    }
+
+    private static void showPlayer(Player player){
+        if(player == null)
+            return;
+        System.out.println("Player "+ player.getName());
+        System.out.println("""
+                
+                1-Edit name
+                2-Edit team
+                0-Back
+                """);
+        int menuNum = input.nextInt();
+        input.nextLine();
+        switch(menuNum){
+            case 0:{
+                break;
+            }
+            case 1:{
+                System.out.print("Enter a name: ");
+                String name = input.nextLine();
+                player.setName(name);
+                Main.playerManager.update(player);
+                System.out.println("Done!");
+                break;
+            }
+            case 2:{
+                System.out.println("The current team: "+player.getTeam().getName());
+                Team team = chooseTeam(showTeams(), "Choose a team");
+                if(team==null){
+                    System.out.println("Canceled!");
+                    return;
+                }
+                player.setTeam(team);
+                Main.playerManager.update(player);
+                System.out.println("Done!");
+                break;
+            }
+        }
+    }
+
+    private static Player chooseCapitan(Player capitan, List<Player> players){
+        if(capitan == null)
+        System.out.println("The team has no capitan at the moment.");
+        else
+            System.out.println("The current capitan is "+capitan.getName());
+        Player newCapitan = choosePlayer(players, "Choose a capitan");
+        return newCapitan;
+    }
+
+
 
     private static boolean isSure() {
         System.out.print("Are you sure? (y/n) ");
