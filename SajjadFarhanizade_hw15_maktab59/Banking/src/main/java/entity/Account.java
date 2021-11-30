@@ -125,7 +125,7 @@ public class Account implements BaseEntity<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, balance, isLocked, customer, branch, creditCard, origin, dest);
+        return Objects.hash(number,customer);
     }
 
     public static AccountBuilder builder() {
