@@ -91,9 +91,9 @@ public class Menu {
                     }
                     break;
                 }
-                case 3:{
+                case 3: {
                     System.out.println("""
-                            
+                                                        
                             1-Show
                             2-Add
                             3-Remove
@@ -105,13 +105,12 @@ public class Menu {
                         case 0: {
                             break;
                         }
-                        case 1:{
-
+                        case 1: {
+                            showTeam(chooseTeam(showTeams(), "Choose a team"));
                         }
                     }
                     break;
                 }
-                case
             }
         }
     }
@@ -235,7 +234,7 @@ public class Menu {
     private static void showStadium(Stadium stadium) {
         if (stadium == null)
             return;
-        System.out.println("Stadium "+stadium.getName());
+        System.out.println("Stadium " + stadium.getName());
         System.out.println("""
                 1-Edit Name
                 2-Remove
@@ -263,16 +262,16 @@ public class Menu {
         }
     }
 
-    private static List<Team> showTeams(){
+    private static List<Team> showTeams() {
         List<Team> teams = Main.teamManager.loadAll();
         System.out.println("Teams:");
         for (int i = 0; i < teams.size(); i++) {
-            System.out.println((i+1)+"-"+teams.get(i).getName());
+            System.out.println((i + 1) + "-" + teams.get(i).getName());
         }
         return teams;
     }
 
-    private static Team chooseTeam(List<Team> teams, String message){
+    private static Team chooseTeam(List<Team> teams, String message) {
         System.out.print(message + " or 0 to back: ");
         int menuNum = input.nextInt();
         input.nextLine();
@@ -281,9 +280,9 @@ public class Menu {
         return teams.get(menuNum - 1);
     }
 
-    private static void showTeam(Team team){
+    private static void showTeam(Team team) {
         System.out.println("""
-                
+                                
                 1-Players
                 2-Capitan
                 3-Coach
@@ -294,17 +293,17 @@ public class Menu {
                 0-Back
                 """);
         int menuNum = input.nextInt();
-        switch(menuNum) {
-            case 0:{
+        switch (menuNum) {
+            case 0: {
                 break;
             }
-            case 1:{
+            case 1: {
                 showPlayer(choosePlayer(showPlayers(team), "Choose a player"));
                 break;
             }
-            case 2:{
+            case 2: {
                 Player capitan = chooseCapitan(team.getCapitan(), team.getPlayers());
-                if (capitan == null){
+                if (capitan == null) {
                     System.out.println("Canceled!");
                     return;
                 }
@@ -312,17 +311,17 @@ public class Menu {
                 Main.teamManager.update(team);
                 System.out.println("Done!");
             }
-            case 3:{
+            case 3: {
 
             }
         }
     }
 
     private static List<Player> showPlayers(Team team) {
-        System.out.println("Players of "+team.getName()+":");
+        System.out.println("Players of " + team.getName() + ":");
         List<Player> players = team.getPlayers();
         for (int i = 0; i < players.size(); i++) {
-            System.out.println((i+1)+"-"+players.get(i).getName());
+            System.out.println((i + 1) + "-" + players.get(i).getName());
         }
         return players;
     }
@@ -336,23 +335,23 @@ public class Menu {
         return players.get(menuNum - 1);
     }
 
-    private static void showPlayer(Player player){
-        if(player == null)
+    private static void showPlayer(Player player) {
+        if (player == null)
             return;
-        System.out.println("Player "+ player.getName());
+        System.out.println("Player " + player.getName());
         System.out.println("""
-                
+                                
                 1-Edit name
                 2-Edit team
                 0-Back
                 """);
         int menuNum = input.nextInt();
         input.nextLine();
-        switch(menuNum){
-            case 0:{
+        switch (menuNum) {
+            case 0: {
                 break;
             }
-            case 1:{
+            case 1: {
                 System.out.print("Enter a name: ");
                 String name = input.nextLine();
                 player.setName(name);
@@ -360,10 +359,10 @@ public class Menu {
                 System.out.println("Done!");
                 break;
             }
-            case 2:{
-                System.out.println("The current team: "+player.getTeam().getName());
+            case 2: {
+                System.out.println("The current team: " + player.getTeam().getName());
                 Team team = chooseTeam(showTeams(), "Choose a team");
-                if(team==null){
+                if (team == null) {
                     System.out.println("Canceled!");
                     return;
                 }
@@ -375,15 +374,14 @@ public class Menu {
         }
     }
 
-    private static Player chooseCapitan(Player capitan, List<Player> players){
-        if(capitan == null)
-        System.out.println("The team has no capitan at the moment.");
+    private static Player chooseCapitan(Player capitan, List<Player> players) {
+        if (capitan == null)
+            System.out.println("The team has no capitan at the moment.");
         else
-            System.out.println("The current capitan is "+capitan.getName());
+            System.out.println("The current capitan is " + capitan.getName());
         Player newCapitan = choosePlayer(players, "Choose a capitan");
         return newCapitan;
     }
-
 
 
     private static boolean isSure() {
