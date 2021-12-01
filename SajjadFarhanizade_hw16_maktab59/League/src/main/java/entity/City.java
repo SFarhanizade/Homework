@@ -11,6 +11,9 @@ public class City extends BaseThing{
     @OneToMany(mappedBy = "city")
     private List<Stadium> stadiums;
 
+    @OneToMany(mappedBy = "city")
+    private List<Team> teams;
+
     public City(Long id, String name) {
         super(id, name);
     }
@@ -21,6 +24,14 @@ public class City extends BaseThing{
 
     public List<Stadium> getStadiums() {
         return stadiums;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public void setStadiums(List<Stadium> stadiums) {
