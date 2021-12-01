@@ -409,7 +409,7 @@ public class Menu {
     }
 
     private static void showTeam(Team team) {
-        if(team == null)
+        if (team == null)
             return;
         System.out.println("""
                                 
@@ -798,8 +798,8 @@ public class Menu {
         System.out.println("Games:");
         for (int i = 0; i < games.size(); i++) {
             Game game = games.get(i);
-            System.out.println((i+1)+"- between "+game.getTeam1().getName() + " and "+
-            game.getTeam2().getName() + "in "+game.getYear());
+            System.out.println((i + 1) + "- between " + game.getTeam1().getName() + " and " +
+                    game.getTeam2().getName() + "in " + game.getYear());
         }
         return games;
     }
@@ -832,34 +832,59 @@ public class Menu {
     private static void addTeam() {
         System.out.print("Enter a name: ");
         String name = input.nextLine();
+        Team team = Team.builder().name(name).build();
+        Main.teamManager.add(team);
         List<Player> players = new ArrayList<>();
         while (players.size() < 5) {
             Player player = choosePlayer(showPlayers(), (players.size() + 1) + "Choose a player");
             if (player != null) {
+                System.out.print("Enter the price: ");
+                Integer price = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter the year: ");
+                Integer year = input.nextInt();
+                input.nextLine();
+                ContractPlayer contract = ContractPlayer.builder()
+                        .player(player)
+                        .team(team)
+                        .price(price)
+                        .year(year)
+                        .build();
                 players.add(player);
+                Main.contractPlayerManager.save(contract);
             }
         }
         Coach coach = null;
         while (coach == null) {
             coach = chooseCoach(showFreeCoaches(), "Choose a coach for the team");
         }
+        System.out.print("Enter the price: ");
+        Integer price = input.nextInt();
+        input.nextLine();
+        System.out.print("Enter the year: ");
+        Integer year = input.nextInt();
+        input.nextLine();
+        ContractCoach contract = ContractCoach.builder()
+                .coach(coach)
+                .team(team)
+                .price(price)
+                .year(year)
+                .build();
+        Main.contractCoachManager.save(contract);
         Player capitan = null;
         while (capitan == null) {
             capitan = chooseCapitan(showPlayers(players), "Choose a capitan for the team");
         }
-        Team team = Team.builder()
-                .name(name)
-                .players(players)
-                .coach(coach)
-                .capitan(capitan)
-                .build();
-        Main.teamManager.save(team);
+        team.setPlayers(players);
+        team.setCoach(coach);
+        team.setCapitan(capitan);
+        Main.teamManager.update(team);
         System.out.println("Done!");
     }
 
     private static List<Player> showPlayers(List<Player> players) {
         for (int i = 0; i < players.size(); i++) {
-            System.out.println((i+1)+"-"+players.get(i).getName());
+            System.out.println((i + 1) + "-" + players.get(i).getName());
         }
         return players;
     }
