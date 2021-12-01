@@ -17,6 +17,10 @@ public class Menu {
                     4-Coach
                     5-Player
                     6-Game
+                    7-Most Expensive Coaches
+                    8-Most Expensive Players
+                    9-Cities and team numbers
+                    10-Champion
                     """);
             int menuNum = input.nextInt();
             input.nextLine();
@@ -195,6 +199,41 @@ public class Menu {
                             break;
                         }
                     }
+                    break;
+                }
+                case 7: {
+                    List<ContractCoach> mostExpensive = Main.contractCoachManager.getMostExpensive();
+                    for (ContractCoach contract : mostExpensive) {
+                        Coach coach = contract.getCoach();
+                        Team team = contract.getTeam();
+                        Integer price = contract.getPrice();
+                        System.out.println("Coach " + coach.getName() +
+                                " in Team " + team.getName() + " for " + price);
+                    }
+                    break;
+                }
+                case 8: {
+                    List<ContractPlayer> mostExpensive = Main.contractPlayerManager.getMostExpensive();
+                    for (ContractPlayer contract : mostExpensive) {
+                        Player player = contract.getPlayer();
+                        Team team = contract.getTeam();
+                        Integer price = contract.getPrice();
+                        System.out.println("Player " + player.getName() +
+                                " in Team " + team.getName() + " for " + price);
+                    }
+                    break;
+                }
+                case 9: {
+                    List<CityTeam> cityTeams = Main.teamManager.getCitiesTeamNumber();
+                    for (CityTeam cityTeam : cityTeams) {
+                        System.out.println(cityTeam.getCity().getName() + " " + cityTeam.getNumber());
+                    }
+                    break;
+                }
+                case 10: {
+                    Team champion = Main.teamManager.getChampion();
+                    System.out.println("The champion is " + champion.getName() +
+                            " points: " + champion.getPoints());
                     break;
                 }
             }
@@ -832,7 +871,8 @@ public class Menu {
     private static void addTeam() {
         System.out.print("Enter a name: ");
         String name = input.nextLine();
-        Team team = Team.builder().name(name).build();
+        City city = chooseCity(showCities(), "Choose a city");
+        Team team = Team.builder().name(name).city(city).build();
         Main.teamManager.add(team);
         List<Player> players = new ArrayList<>();
         while (players.size() < 5) {
