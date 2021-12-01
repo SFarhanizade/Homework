@@ -18,6 +18,10 @@ public class BaseThing extends BaseEntity{
         this.name = name;
     }
 
+    public BaseThing(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

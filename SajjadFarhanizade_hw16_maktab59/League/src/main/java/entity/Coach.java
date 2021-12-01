@@ -12,8 +12,8 @@ public class Coach extends BaseThing{
     public Coach() {
     }
 
-    public Coach(Long id, String name, Team team) {
-        super(id, name);
+    public Coach(String name, Team team) {
+        super(name);
         this.team = team;
     }
 
@@ -23,5 +23,28 @@ public class Coach extends BaseThing{
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public static CoachBuilder builder() {
+        return new CoachBuilder();
+    }
+
+    public static class CoachBuilder{
+        private String name;
+        private Team team;
+
+        public CoachBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CoachBuilder team(Team team) {
+            this.team = team;
+            return this;
+        }
+
+        public Coach build(){
+            return new Coach(name,team);
+        }
     }
 }

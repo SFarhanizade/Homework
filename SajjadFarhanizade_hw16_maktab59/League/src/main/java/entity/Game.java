@@ -24,9 +24,9 @@ public class Game extends BaseEntity{
 
     private Integer year;
 
-    public Game(Long id, Stadium stadium, Team team1, Team team2,
+    public Game(Stadium stadium, Team team1, Team team2,
                 Integer firstTeamGoals, Integer secondTeamGoals, Integer year) {
-        super(id);
+        super();
         this.stadium = stadium;
         this.team1 = team1;
         this.team2 = team2;
@@ -103,5 +103,52 @@ public class Game extends BaseEntity{
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public static GameBuilder builder(){
+        return new GameBuilder();
+    }
+
+    public static class GameBuilder{
+        private Stadium stadium;
+        private Team team1;
+        private Team team2;
+        private Integer goals1;
+        private Integer goals2;
+        private Integer year;
+
+        public GameBuilder team1(Team team1) {
+            this.team1 = team1;
+            return this;
+        }
+
+        public GameBuilder team2(Team team2) {
+            this.team2 = team2;
+            return this;
+        }
+
+        public GameBuilder goals1(Integer goals1) {
+            this.goals1 = goals1;
+            return this;
+        }
+
+        public GameBuilder goals2(Integer goals2) {
+            this.goals2 = goals2;
+            return this;
+        }
+
+        public GameBuilder year(Integer year) {
+            this.year = year;
+            return this;
+        }
+
+        public GameBuilder stadium(Stadium stadium) {
+            this.stadium = stadium;
+            return this;
+        }
+
+        public Game build(){
+            return new Game(stadium,team1,team2,goals1,goals2,year);
+        }
     }
 }

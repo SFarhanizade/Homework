@@ -11,7 +11,7 @@ public class Stadium extends BaseThing{
     @ManyToOne
     private City city;
 
-    @OneToMany
+    @OneToMany(mappedBy = "stadium")
     private List<Game> games;
 
     public Stadium(City city) {

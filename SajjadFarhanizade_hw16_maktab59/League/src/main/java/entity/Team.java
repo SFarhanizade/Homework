@@ -11,7 +11,7 @@ public class Team extends BaseThing{
     @OneToOne
     private Coach coach;
 
-    @OneToMany
+    @OneToMany(mappedBy = "team")
     private List<Player> players;
 
     @OneToOne
@@ -25,10 +25,11 @@ public class Team extends BaseThing{
     public Team() {
     }
 
-    public Team(Long id, String name, Coach coach, List<Player> players) {
-        super(id, name);
+    public Team(String name, Coach coach, List<Player> players, Player capitan) {
+        super(name);
         this.coach = coach;
         this.players = players;
+        this.capitan = capitan;
     }
 
     public Coach getCoach() {
@@ -69,5 +70,40 @@ public class Team extends BaseThing{
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public static TeamBuilder builder() {
+        return new TeamBuilder();
+    }
+
+    public static class TeamBuilder{
+        private String name;
+        private Coach coach;
+        private List<Player> players;
+        private Player capitan;
+
+        public TeamBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public TeamBuilder coach(Coach coach) {
+            this.coach = coach;
+            return this;
+        }
+
+        public TeamBuilder players(List<Player> players) {
+            this.players = players;
+            return this;
+        }
+
+        public TeamBuilder capitan(Player capitan) {
+            this.capitan = capitan;
+            return this;
+        }
+
+        public Team build(){
+            return new Team(name,coach,players,capitan);
+        }
     }
 }
