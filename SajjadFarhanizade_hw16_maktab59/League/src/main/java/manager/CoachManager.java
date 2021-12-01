@@ -1,6 +1,5 @@
 package manager;
 
-import dao.CityDao;
 import dao.CoachDao;
 import entity.Coach;
 

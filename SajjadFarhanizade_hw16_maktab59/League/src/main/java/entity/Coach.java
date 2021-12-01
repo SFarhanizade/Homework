@@ -1,10 +1,15 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.List;
 
 @Entity
 public class Coach extends BaseThing{
+
+    @OneToMany(mappedBy="coach")
+    private List<ContractCoach> contracts;
 
     @OneToOne
     private Team team;
@@ -23,6 +28,14 @@ public class Coach extends BaseThing{
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public List<ContractCoach> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<ContractCoach> contracts) {
+        this.contracts = contracts;
     }
 
     public static CoachBuilder builder() {

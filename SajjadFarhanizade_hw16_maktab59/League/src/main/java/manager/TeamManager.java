@@ -1,6 +1,5 @@
 package manager;
 
-import dao.CityDao;
 import dao.TeamDao;
 import entity.Coach;
 import entity.Player;
@@ -9,6 +8,13 @@ import entity.Team;
 import java.util.List;
 
 public class TeamManager extends BaseManager<Team>{
+
+
+    public void add(Team entity){
+        entityManager.getTransaction().begin();
+        entityManager.persist(entity);
+        entityManager.getTransaction().commit();
+    }
 
     @Override
     public void save(Team entity) {

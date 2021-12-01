@@ -8,6 +8,9 @@ import java.util.List;
 @Entity
 public class Team extends BaseThing{
 
+    @OneToMany(mappedBy="team")
+    private List<ContractCoach> coachContracts;
+
     @OneToOne
     private Coach coach;
 
@@ -22,14 +25,26 @@ public class Team extends BaseThing{
 
     private Integer points = 0;
 
+    private Long coachPrice;
+
+    public List<ContractCoach> getCoachContracts() {
+        return coachContracts;
+    }
+
+    public void setCoachContracts(List<ContractCoach> coachContracts) {
+        this.coachContracts = coachContracts;
+    }
+
     public Team() {
     }
 
-    public Team(String name, Coach coach, List<Player> players, Player capitan) {
+    public Team(String name, Coach coach, List<Player> players,
+                Player capitan,Long coachPrice) {
         super(name);
         this.coach = coach;
         this.players = players;
         this.capitan = capitan;
+        this.coachPrice = coachPrice;
     }
 
     public Coach getCoach() {
@@ -72,6 +87,14 @@ public class Team extends BaseThing{
         this.points = points;
     }
 
+    public Long getCoachPrice() {
+        return coachPrice;
+    }
+
+    public void setCoachPrice(Long coachPrice) {
+        this.coachPrice = coachPrice;
+    }
+
     public static TeamBuilder builder() {
         return new TeamBuilder();
     }
@@ -81,6 +104,7 @@ public class Team extends BaseThing{
         private Coach coach;
         private List<Player> players;
         private Player capitan;
+        private Long coachPrice;
 
         public TeamBuilder name(String name) {
             this.name = name;
@@ -102,8 +126,13 @@ public class Team extends BaseThing{
             return this;
         }
 
+        public TeamBuilder coachPrice(Long price) {
+            coachPrice=price;
+            return this;
+        }
+
         public Team build(){
-            return new Team(name,coach,players,capitan);
+            return new Team(name,coach,players,capitan,coachPrice);
         }
     }
 }
