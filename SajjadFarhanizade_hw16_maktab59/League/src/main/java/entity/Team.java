@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
@@ -8,8 +9,14 @@ import java.util.List;
 @Entity
 public class Team extends BaseThing{
 
+    @ManyToOne
+    private City city;
+
     @OneToMany(mappedBy="team")
     private List<ContractCoach> coachContracts;
+
+    @OneToMany(mappedBy="team")
+    private List<ContractPlayer> playerContracts;
 
     @OneToOne
     private Coach coach;
@@ -25,7 +32,6 @@ public class Team extends BaseThing{
 
     private Integer points = 0;
 
-    private Long coachPrice;
 
     public List<ContractCoach> getCoachContracts() {
         return coachContracts;
@@ -38,13 +44,18 @@ public class Team extends BaseThing{
     public Team() {
     }
 
-    public Team(String name, Coach coach, List<Player> players,
-                Player capitan,Long coachPrice) {
+    public Team(String name, City city, Coach coach, List<Player> players,
+                Player capitan) {
         super(name);
+        this.city = city;
         this.coach = coach;
         this.players = players;
         this.capitan = capitan;
-        this.coachPrice = coachPrice;
+    }
+
+    public Team(String name,int points) {
+        super(name);
+        this.points = points;
     }
 
     public Coach getCoach() {
@@ -87,12 +98,12 @@ public class Team extends BaseThing{
         this.points = points;
     }
 
-    public Long getCoachPrice() {
-        return coachPrice;
+    public City getCity() {
+        return city;
     }
 
-    public void setCoachPrice(Long coachPrice) {
-        this.coachPrice = coachPrice;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public static TeamBuilder builder() {
@@ -101,13 +112,17 @@ public class Team extends BaseThing{
 
     public static class TeamBuilder{
         private String name;
+        private City city;
         private Coach coach;
         private List<Player> players;
         private Player capitan;
-        private Long coachPrice;
 
         public TeamBuilder name(String name) {
             this.name = name;
+            return this;
+        }
+        public TeamBuilder city(City city) {
+            this.city = city;
             return this;
         }
 
@@ -126,13 +141,8 @@ public class Team extends BaseThing{
             return this;
         }
 
-        public TeamBuilder coachPrice(Long price) {
-            coachPrice=price;
-            return this;
-        }
-
         public Team build(){
-            return new Team(name,coach,players,capitan,coachPrice);
+            return new Team(name, city, coach,players,capitan);
         }
     }
 }
