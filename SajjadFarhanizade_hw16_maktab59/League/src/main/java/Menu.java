@@ -312,8 +312,57 @@ public class Menu {
                 System.out.println("Done!");
             }
             case 3: {
-
+                System.out.println("""
+                        1-Show
+                        2-Change
+                        3-Remove
+                        0-Back
+                        """);
+                menuNum = input.nextInt();
+                input.nextLine();
+                switch (menuNum) {
+                    case 0: {
+                        break;
+                    }
+                    case 1: {
+                        showCoach(team.getCoach());
+                        break;
+                    }
+                    case 2: {
+                        if (team.getCoach() == null) {
+                            System.out.println("There is no coach working with this team!");
+                        }
+                        Coach coach = chooseCoach(showFreeCoaches(), "Choose a coach");
+                        if (coach == null) {
+                            System.out.println("There are no free coaches available right now!");
+                            break;
+                        }
+                        team.setCoach(coach);
+                        Main.coachManager.update(coach);
+                        System.out.println("Done!");
+                        break;
+                    }
+                    case 3: {
+                        if (!isSure()) {
+                            System.out.println("Canceled!");
+                            break;
+                        }
+                        team.setCoach(null);
+                        Main.teamManager.update(team);
+                        System.out.println("Removed!");
+                    }
+                }
             }
+            case 4: {
+                System.out.println("Teams sorted by points:");
+                List<Team> teams = getTeamSortedByPoints();
+                for (int i = 0; i < teams.size(); i++) {
+                    System.out.println((i + 1) + "-" + teams.get(i).getName() +
+                            " - points: " + teams.get(i).getPoints());
+                }
+                break;
+            }
+
         }
     }
 
@@ -383,6 +432,89 @@ public class Menu {
         return newCapitan;
     }
 
+    private static List<Coach> showFreeCoaches() {
+        List<Coach> coaches = Main.coachManager.loadFreeCoaches();
+        if (coaches.isEmpty()) {
+            return null;
+        }
+        for (int i = 0; i < coaches.size(); i++) {
+            System.out.println((i + 1) + "-" + (coaches.get(i).getName()));
+        }
+        return coaches;
+    }
+
+    private static void showCoach(Coach coach) {
+
+        System.out.println("Coach " + coach.getName());
+        System.out.println("""
+                1-Edit name
+                2-Edit team
+                3-Quit from the team
+                0-Back
+                """);
+        int menuNum = input.nextInt();
+        input.nextLine();
+        switch (menuNum) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                System.out.print("Enter a name: ");
+                String name = input.nextLine();
+                coach.setName(name);
+                Main.coachManager.update(coach);
+                System.out.println("Done!");
+                break;
+            }
+            case 2: {
+                System.out.println("The current team: " + coach.getTeam().getName());
+                Team team = chooseTeam(showTeams(), "Choose a team");
+                if (team == null) {
+                    System.out.println("Canceled!");
+                    return;
+                }
+                if (team.getCoach() != null) {
+                    System.out.println("This team has already had a coach!");
+                    return;
+                }
+                coach.setTeam(team);
+                Main.coachManager.update(coach);
+                System.out.println("Done!");
+                break;
+            }
+            case 3: {
+                if (coach.getTeam() == null) {
+                    System.out.println("There is no team working with the coach!");
+                    break;
+                }
+                if (!isSure()) {
+                    System.out.println("Canceled!");
+                    break;
+                }
+                coach.setTeam(null);
+                Main.coachManager.update(coach);
+                System.out.println("Done!");
+                break;
+            }
+        }
+    }
+
+    private static Coach chooseCoach(List<Coach> coaches, String message) {
+        if (coaches == null) {
+            System.out.println("There are no coaches available right now!");
+            return null;
+        }
+        System.out.print(message + " or 0 to back: ");
+        int menuNum = input.nextInt();
+        input.nextLine();
+        if (menuNum == 0)
+            return null;
+        return coaches.get(menuNum - 1);
+    }
+
+    private static List<Team> getTeamSortedByPoints() {
+        return Main.teamManager.getAllSortedByPoints();
+    }
 
     private static boolean isSure() {
         System.out.print("Are you sure? (y/n) ");
