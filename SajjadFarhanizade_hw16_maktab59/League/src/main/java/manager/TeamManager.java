@@ -1,9 +1,7 @@
 package manager;
 
 import dao.TeamDao;
-import entity.Coach;
-import entity.Player;
-import entity.Team;
+import entity.*;
 
 import java.util.List;
 
@@ -64,5 +62,13 @@ public class TeamManager extends BaseManager<Team>{
 
     public List<Team> getValidTeams(Team team) {
         return  ((TeamDao)baseDao).getValidTeams(team);
+    }
+
+    public List<CityTeam> getCitiesTeamNumber() {
+        return ((TeamDao)baseDao).getCitiesTeamNumber();
+    }
+
+    public Team getChampion() {
+        return  ((TeamDao)baseDao).getChampion();
     }
 }
