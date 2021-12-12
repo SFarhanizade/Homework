@@ -1,5 +1,6 @@
 package dao;
 
+import dto.PlayerDto;
 import entity.Player;
 
 import javax.persistence.EntityManager;
@@ -21,5 +22,10 @@ public class PlayerDao extends BaseDao<Player> {
                 entityManager.createQuery("From Player p where p.team is null",
                         getEntityClass());
         return query.getResultList();
+    }
+
+    public List<PlayerDto> getPlayersDto(){
+        return entityManager.createQuery("Select new dto.PlayerDto(p.id,t.points) From Player p " +
+                "Inner JOIN Team t On p.team.id = t.id",PlayerDto.class).getResultList();
     }
 }
