@@ -1,0 +1,104 @@
+*{
+    margin:0;
+    padding:0;
+    text-align:center;
+    color:white;
+}
+
+header, .content div, .colors div{
+    margin-bottom: 2rem;
+}
+
+header, .content>div, .colors>div{
+    display: flex;
+    flex-direction: column;
+    vertical-align:middle;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    height: 20vh;
+}
+
+.content div{
+    height:auto;
+}
+
+
+header{
+    background-color: rgba(60,138,228);
+}
+
+.content>div, .colors>div{
+    margin-right:1rem;
+    margin-left:1rem;
+}
+
+.content>div{
+    background-color: rgb(240,236,236);
+}
+
+.content div h2,p{
+    color: black;
+}
+
+@media (max-width: 576px){
+    .end{
+        display: none !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px){
+    .content{
+        display: flex !important;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .content div{
+        width: 41%;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+
+    .colors{
+        display: flex !important;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .colors div{
+        width:41%;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+}
+@media (min-width: 768px){
+
+    .content{
+        display: flex !important;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .content div{
+        width: 29%;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+
+    .colors{
+        display: flex !important;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .colors div{
+        width:29%;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+}
