@@ -3,10 +3,8 @@ package dao;
 import db_config.DbConfig;
 import entity.*;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,9 @@ public class AdminDao {
 
     public Admin login(String username, String password) throws SQLException {
         String query = "SELECT * FROM `admin` WHERE `username` = ? AND `password` = ?";
+        /*DataSource dataSource = DbConfig.createDataSource();
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);*/
         PreparedStatement ps = DbConfig.createDataSource().getConnection().prepareStatement(query);
         ps.setString(1,username);
         ps.setString(2,password);
@@ -41,7 +42,6 @@ public class AdminDao {
     }
     public void delete(int id) throws SQLException {
         String query = "DELETE FROM  `admin` WHERE `id`=?";
-        query = "DELETE FROM  `admin` WHERE `id`=?";
         PreparedStatement ps = DbConfig.createDataSource().getConnection().prepareStatement(query);
         ps.setInt(1,id);
         ps.executeUpdate();
