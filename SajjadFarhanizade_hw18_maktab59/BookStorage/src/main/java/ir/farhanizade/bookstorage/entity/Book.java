@@ -1,6 +1,8 @@
 package ir.farhanizade.bookstorage.entity;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title;
     private String publisher;
     private String author;
@@ -27,5 +29,15 @@ public class Book {
 
     public Integer getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
