@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Storage</title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+</head>
+<body   style="display: flex; flex-direction: column;
+               vertical-align:middle; justify-content: center;
+               align-items: center; width: 100vw;
+               height: 100vh;">
+
+<div style="width: 50vh; margin: 0 auto; background-color: #c7c7c7;
+            padding: 2vh; border-radius: 3vh;">
+    <form action="add" method="get">
+        <div class="form-group">
+            <label>Title</label>
+            <input name="title" type="text" class="form-control" placeholder="Enter title">
+        </div>
+        <div class="form-group">
+            <label>Publisher</label>
+            <input name="publisher" type="text" class="form-control" placeholder="Enter publisher">
+        </div>
+        <div class="form-group">
+            <label>Author</label>
+            <input name="author" type="text" class="form-control" placeholder="Enter author">
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input name="price" type="number" class="form-control" placeholder="Enter price">
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-1">Add</button>
+    </form>
+    <a href="load"><button class="btn btn-success w-100 mt-1">Show All Books</button></a>
+</div>
+</body>
+</html>
