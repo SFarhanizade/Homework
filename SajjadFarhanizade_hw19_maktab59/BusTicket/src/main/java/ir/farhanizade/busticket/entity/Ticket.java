@@ -3,7 +3,6 @@ package ir.farhanizade.busticket.entity;
 import ir.farhanizade.busticket.core.BaseEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
