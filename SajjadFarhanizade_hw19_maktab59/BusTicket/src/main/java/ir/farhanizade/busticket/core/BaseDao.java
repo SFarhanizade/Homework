@@ -4,8 +4,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public abstract class BaseDao<T extends BaseEntity> {
-    private EntityManager entityManager;
+public class BaseDao<T extends BaseEntity> {
+    private final EntityManager entityManager;
+
+    public BaseDao(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public void saveOrUpdate(T entity) {
         entityManager.getTransaction().begin();
@@ -28,5 +32,7 @@ public abstract class BaseDao<T extends BaseEntity> {
         return resultList;
     }
 
-    public abstract Class<T> getEntityClass();
+    public Class<T> getEntityClass(){
+        return (Class<T>) BaseEntity.class;
+    }
 }
