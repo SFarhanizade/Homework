@@ -77,7 +77,7 @@ public class Travel extends BaseEntity {
             return this;
         }
 
-        public TravelBuilder destination(City city){
+        public TravelBuilder destination(City destination){
             this.destination = destination;
             return this;
         }
