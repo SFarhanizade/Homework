@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class BaseDao<T extends BaseEntity> {
+public abstract class BaseDao<T extends BaseEntity> {
     private final EntityManager entityManager;
 
     public BaseDao(EntityManager entityManager) {
@@ -32,7 +32,5 @@ public class BaseDao<T extends BaseEntity> {
         return resultList;
     }
 
-    public Class<T> getEntityClass(){
-        return (Class<T>) BaseEntity.class;
-    }
+    public abstract Class<T> getEntityClass();
 }
