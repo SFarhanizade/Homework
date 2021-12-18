@@ -43,7 +43,7 @@ public class Ticket extends BaseEntity {
         return new TicketBuilder();
     }
 
-    static class TicketBuilder{
+    public static class TicketBuilder{
         private Travel travel;
         private User owner;
 

@@ -73,7 +73,7 @@ public class User extends BaseEntity {
         return new UserBuilder();
     }
 
-    static class UserBuilder{
+    public static class UserBuilder{
         private String fName;
         private String lName;
         private String username;

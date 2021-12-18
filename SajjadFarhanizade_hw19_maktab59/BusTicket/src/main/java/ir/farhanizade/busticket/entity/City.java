@@ -29,7 +29,7 @@ public class City extends BaseEntity {
         return new CityBuilder();
     }
 
-    static class CityBuilder{
+    public static class CityBuilder{
         private String name;
 
         public CityBuilder name(String name){

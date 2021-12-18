@@ -66,7 +66,7 @@ public class Travel extends BaseEntity {
         return new TravelBuilder();
     }
 
-    static class TravelBuilder{
+    public static class TravelBuilder{
         private City origin;
         private City destination;
         private Date date;
