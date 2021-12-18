@@ -9,4 +9,9 @@ public class UserDao extends BaseDao<User> {
     public UserDao(EntityManager entityManager) {
         super(entityManager);
     }
+
+    @Override
+    public Class<User> getEntityClass() {
+        return User.class;
+    }
 }

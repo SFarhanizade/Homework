@@ -9,4 +9,9 @@ public class TicketDao extends BaseDao<Ticket> {
     public TicketDao(EntityManager entityManager) {
         super(entityManager);
     }
+
+    @Override
+    public Class<Ticket> getEntityClass() {
+        return Ticket.class;
+    }
 }

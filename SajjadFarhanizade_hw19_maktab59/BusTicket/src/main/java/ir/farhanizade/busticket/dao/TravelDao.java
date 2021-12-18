@@ -9,4 +9,9 @@ public class TravelDao extends BaseDao<Travel> {
     public TravelDao(EntityManager entityManager) {
         super(entityManager);
     }
+
+    @Override
+    public Class<Travel> getEntityClass() {
+        return Travel.class;
+    }
 }
