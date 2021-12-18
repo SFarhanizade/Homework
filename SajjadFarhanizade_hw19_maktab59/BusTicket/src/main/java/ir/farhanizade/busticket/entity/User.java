@@ -2,8 +2,11 @@ package ir.farhanizade.busticket.entity;
 
 import ir.farhanizade.busticket.core.BaseEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +18,17 @@ public class User extends BaseEntity {
     private String password;
     private Gender gender;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> tickets;
+
+    public User(String fName, String lName, String username, String password, Gender gender, List<Ticket> tickets) {
+        this.fName = fName;
+        this.lName = lName;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.tickets = tickets;
+    }
 
     public User(String fName, String lName, String username, String password, Gender gender) {
         this.fName = fName;
@@ -67,6 +79,21 @@ public class User extends BaseEntity {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void addTicket(Ticket ticket){
+        if(tickets == null){
+            tickets = new ArrayList<>();
+        }
+        tickets.add(ticket);
     }
 
     public static UserBuilder builder(){
