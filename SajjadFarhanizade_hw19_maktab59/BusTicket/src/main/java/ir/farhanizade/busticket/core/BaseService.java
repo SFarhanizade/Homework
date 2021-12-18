@@ -8,8 +8,8 @@ import java.util.List;
 public class BaseService<T extends BaseEntity> {
     private static final EntityManagerFactory entityManagerFactory =
             Persistence.createEntityManagerFactory("jpa-busTicket");
-    private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
-    private BaseDao<T> baseDao = new BaseDao<>(entityManager);
+    protected static final EntityManager entityManager = entityManagerFactory.createEntityManager();
+    protected BaseDao<T> baseDao;
 
     public void saveOrUpdate(T entity){
         baseDao.saveOrUpdate(entity);
