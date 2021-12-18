@@ -5,7 +5,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public abstract class BaseDao<T extends BaseEntity> {
-    private final EntityManager entityManager;
+    protected final EntityManager entityManager;
 
     public BaseDao(EntityManager entityManager) {
         this.entityManager = entityManager;
