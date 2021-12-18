@@ -3,6 +3,8 @@ package ir.farhanizade.busticket.entity;
 import ir.farhanizade.busticket.core.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class User extends BaseEntity {
@@ -12,6 +14,9 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private Gender gender;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Ticket> tickets;
 
     public User(String fName, String lName, String username, String password, Gender gender) {
         this.fName = fName;
