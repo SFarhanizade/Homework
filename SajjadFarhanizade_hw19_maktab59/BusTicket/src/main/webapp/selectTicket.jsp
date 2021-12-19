@@ -15,6 +15,7 @@
         request.getRequestDispatcher("login.jsp").forward(request, response);
     } else {
 %>
+<jsp:include page="LoggedInTopBar.jsp"/>
 <html>
 <head>
     <title>Title</title>

@@ -7,9 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="LoggedInTopBar.jsp"/>
 <%
     List<Travel> travels = (List<Travel>) request.getAttribute("travels");
-    if (travels != null) {
+    if (travels.size()>0) {
 %>
 <html>
 <head>
@@ -54,6 +55,11 @@
 </table>
 </body>
 </html>
+<%
+    } else{
+%>
+<script>window.alert('No Travels Found!');
+location.replace('index.jsp');</script>
 <%
     }
 %>

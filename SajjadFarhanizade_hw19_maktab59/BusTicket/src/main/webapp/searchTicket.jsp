@@ -12,6 +12,7 @@
     CityService cityService = new CityService();
     List<City> cities = cityService.loadAll();
 %>
+<jsp:include page="LoggedInTopBar.jsp"/>
 <html>
 <head>
     <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
@@ -22,11 +23,12 @@
         <div class="flex-grow-1" style="margin-right: 1rem">
             <p style="margin: 0">Origin</p>
             <select class="form-select " aria-label="Default select example" name="origin">
-                <option selected>Choose origin</option>
+                <option value="" selected>Choose origin</option>
                 <%
-                    for (City city: cities){
+                    for (City city : cities) {
                 %>
-                <option value="<%=city.getId()%>"><%=city.getName()%></option>
+                <option value="<%=city.getId()%>"><%=city.getName()%>
+                </option>
                 <%
                     }
                 %>
@@ -35,11 +37,12 @@
         <div class="flex-grow-1" style="margin-right: 1rem">
             <p style="margin: 0">Destination</p>
             <select class="form-select" aria-label="Default select example" name="destination">
-                <option selected>Choose destination</option>
+                <option value="" selected>Choose destination</option>
                 <%
-                    for (City city: cities){
+                    for (City city : cities) {
                 %>
-                <option value="<%=city.getId()%>"><%=city.getName()%></option>
+                <option value="<%=city.getId()%>"><%=city.getName()%>
+                </option>
                 <%
                     }
                 %>

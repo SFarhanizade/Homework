@@ -12,6 +12,7 @@
     String gender = ("MALE".equals(user.getGender().toString())) ? "Mr." : "Mrs.";
     String name = user.getlName();
 %>
+<jsp:include page="LoggedInTopBar.jsp"/>
 <html>
 <head>
     <title>Title</title>

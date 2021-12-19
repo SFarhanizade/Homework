@@ -12,6 +12,7 @@
         Object travel = request.getAttribute("travel");
         Object redirect = request.getAttribute("redirect");
 %>
+<jsp:include page="LoggedInTopBar.jsp"/>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
