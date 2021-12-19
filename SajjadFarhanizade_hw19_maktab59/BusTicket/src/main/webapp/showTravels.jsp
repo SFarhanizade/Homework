@@ -39,7 +39,7 @@
         <td><%=travel.getId()%></td>
         <td><%=travel.getTime()%></td>
         <td>
-            <a href="#">
+            <a href="selectTicket.jsp/?travel=<%=travel.getId()%>">
                 <button class="btn btn-info">Select</button>
             </a>
         </td>
