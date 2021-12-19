@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ir.farhanizade.busticket.entity.*" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="java.sql.Time" %><%--
+<%@ page import="java.sql.Time" %>
+<%@ page import="ir.farhanizade.busticket.service.TicketService" %><%--
   Created by IntelliJ IDEA.
   User: farhanizade
   Date: 12/19/21
@@ -12,7 +13,8 @@
 <jsp:include page="LoggedInTopBar.jsp"/>
 <%
     User user = (User) session.getAttribute("user");
-    List<Ticket> tickets = user.getTickets();
+
+    List<Ticket> tickets = new TicketService().getUserTickets(user);
     if (tickets != null) {
 %>
 <html>
