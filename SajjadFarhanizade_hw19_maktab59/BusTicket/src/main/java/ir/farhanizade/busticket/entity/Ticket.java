@@ -1,6 +1,8 @@
 package ir.farhanizade.busticket.entity;
 
 import ir.farhanizade.busticket.core.BaseEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -8,9 +10,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Ticket extends BaseEntity {
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private Travel travel;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private User owner;
 

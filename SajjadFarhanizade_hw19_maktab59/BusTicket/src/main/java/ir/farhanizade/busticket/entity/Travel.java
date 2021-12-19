@@ -1,25 +1,33 @@
 package ir.farhanizade.busticket.entity;
 
+import com.sun.istack.Nullable;
 import ir.farhanizade.busticket.core.BaseEntity;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Travel extends BaseEntity {
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private City origin;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private City destination;
 
     private LocalDate date;
 
     private Time time;
+
+    @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 
     public Travel(City origin, City destination, LocalDate date, Time time) {
         this.origin = origin;
