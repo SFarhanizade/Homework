@@ -24,7 +24,11 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             session.setAttribute("user", user);
         }
-        resp.sendRedirect("index.jsp");
+        String redirect = req.getParameter("redirect");
+        if (redirect != null)
+            req.getRequestDispatcher(redirect).forward(req, resp);
+        else
+            resp.sendRedirect("index.jsp");
 
     }
 }
