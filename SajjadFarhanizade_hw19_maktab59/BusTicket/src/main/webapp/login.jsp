@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Object user = session.getAttribute("user");
-    if(user==null){
+    if (user == null) {
 %>
 <html lang="en">
 <head>
@@ -22,7 +22,8 @@
 <body>
 
 <div class="login">
-    <form method="post" action="login">
+    <form method="post"
+          action="login?redirect=<%=request.getAttribute("redirect")%>&travel=<%=request.getAttribute("travel")%>">
         <label class="login-text">Login</label>
         <input type="text" class="input" placeholder="Username" name="username"/>
         <input type="text" class="input" placeholder="Password" name="password"/>
@@ -33,8 +34,7 @@
 </body>
 </html>
 <%
-    }
-    else{
+    } else {
         response.sendRedirect("index.jsp");
     }
 %>
