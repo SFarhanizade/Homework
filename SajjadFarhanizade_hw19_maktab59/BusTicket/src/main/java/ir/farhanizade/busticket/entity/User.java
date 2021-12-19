@@ -18,7 +18,7 @@ public class User extends BaseEntity {
     private String password;
     private Gender gender;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
     public User(String fName, String lName, String username, String password, Gender gender, List<Ticket> tickets) {
