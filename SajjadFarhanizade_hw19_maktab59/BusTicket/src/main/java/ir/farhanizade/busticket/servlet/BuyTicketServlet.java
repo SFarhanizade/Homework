@@ -23,16 +23,21 @@ public class BuyTicketServlet extends HttpServlet {
         String fName = req.getParameter("fName");
         String lName = req.getParameter("lName");
         String gender = req.getParameter("gender");
-        user.setfName(fName);
-        user.setlName(lName);
-        user.setGender((gender.equals("Male") ? Gender.MALE : Gender.FEMALE));
-        int travelId = Integer.parseInt(strTravel);
-        Travel travel = new TravelService().loadById(travelId);
-        Ticket ticket = Ticket.builder()
-                .owner(user)
-                .travel(travel)
-                .build();
-        new TicketService().saveOrUpdate(ticket);
-        req.getRequestDispatcher("ticketReceipt.jsp").forward(req, resp);
+        if("".equals(fName) || "".equals(lName) || gender==null){
+            resp.sendRedirect("index.jsp");
+        }
+        else {
+            user.setfName(fName);
+            user.setlName(lName);
+            user.setGender((gender.equals("Male") ? Gender.MALE : Gender.FEMALE));
+            int travelId = Integer.parseInt(strTravel);
+            Travel travel = new TravelService().loadById(travelId);
+            Ticket ticket = Ticket.builder()
+                    .owner(user)
+                    .travel(travel)
+                    .build();
+            new TicketService().saveOrUpdate(ticket);
+            req.getRequestDispatcher("ticketReceipt.jsp").forward(req, resp);
+        }
     }
 }
