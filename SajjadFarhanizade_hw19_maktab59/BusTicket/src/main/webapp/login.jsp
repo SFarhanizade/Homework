@@ -9,6 +9,8 @@
 <%
     Object user = session.getAttribute("user");
     if (user == null) {
+        Object travel = request.getAttribute("travel");
+        Object redirect = request.getAttribute("redirect");
 %>
 <html lang="en">
 <head>
@@ -23,7 +25,8 @@
 
 <div class="login">
     <form method="post"
-          action="login?redirect=<%=request.getAttribute("redirect")%>&travel=<%=request.getAttribute("travel")%>">
+          action="login
+          <%= (redirect==null)?"":"?redirect="+redirect%><%= (travel==null)?"":"&travel="+travel%>">
         <label class="login-text">Login</label>
         <input type="text" class="input" placeholder="Username" name="username"/>
         <input type="text" class="input" placeholder="Password" name="password"/>
