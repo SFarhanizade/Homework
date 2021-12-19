@@ -20,7 +20,7 @@ public class TicketDao extends BaseDao<Ticket> {
             entityManager.merge(entity);
         User owner = entity.getOwner();
         owner.addTicket(entity);
-        entityManager.persist(owner);
+        entityManager.merge(owner);
         entityManager.getTransaction().commit();
 
     }
