@@ -19,9 +19,9 @@
 </head>
 <body class="align-items-center align-content-center mt-1">
 <div class="container d-flex w-75 align-items-center">
-    <a href="dashboard.jsp" class="btn btn-primary flex-grow-1 m-auto">name</a>
-    <a href="tickets.jps"   class="btn btn-primary flex-grow-1 m-auto">tickets</a>
-    <a href="buy.jsp"       class="btn btn-primary flex-grow-1 m-auto">buy tickets</a>
+<%--    <a href="dashboard.jsp" class="btn btn-primary flex-grow-1 m-auto">name</a>--%>
+    <a href="tickets.jsp"   class="btn btn-primary flex-grow-1 m-auto">tickets</a>
+    <a href="index.jsp"       class="btn btn-primary flex-grow-1 m-auto">buy tickets</a>
     <a href="logout"    class="btn btn-primary flex-grow-1 m-auto">logout</a>
 </div>
 </body>
@@ -39,7 +39,7 @@
 <body class="align-items-center align-content-center mt-1">
 <div class="container d-flex w-75 align-items-center">
     <a href="login.jsp"     class="btn btn-primary flex-grow-1 m-auto">login</a>
-    <a href="buy.jsp"       class="btn btn-primary flex-grow-1 m-auto">buy tickets</a>
+    <a href="index.jsp"       class="btn btn-primary flex-grow-1 m-auto">buy tickets</a>
 </div>
 </body>
 </html>
