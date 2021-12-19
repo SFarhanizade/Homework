@@ -5,6 +5,7 @@ import ir.farhanizade.busticket.core.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,11 +17,11 @@ public class Travel extends BaseEntity {
     @ManyToOne
     private City destination;
 
-    private Date date;
+    private LocalDate date;
 
     private Time time;
 
-    public Travel(City origin, City destination, Date date, Time time) {
+    public Travel(City origin, City destination, LocalDate date, Time time) {
         this.origin = origin;
         this.destination = destination;
         this.date = date;
@@ -46,11 +47,11 @@ public class Travel extends BaseEntity {
         this.destination = destination;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -69,7 +70,7 @@ public class Travel extends BaseEntity {
     public static class TravelBuilder{
         private City origin;
         private City destination;
-        private Date date;
+        private LocalDate date;
         private Time time;
 
         public TravelBuilder origin(City origin){
@@ -82,7 +83,7 @@ public class Travel extends BaseEntity {
             return this;
         }
 
-        public TravelBuilder date(Date date){
+        public TravelBuilder date(LocalDate date){
             this.date = date;
             return this;
         }
