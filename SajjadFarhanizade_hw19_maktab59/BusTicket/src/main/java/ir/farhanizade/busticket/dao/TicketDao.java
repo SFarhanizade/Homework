@@ -5,6 +5,8 @@ import ir.farhanizade.busticket.entity.Ticket;
 import ir.farhanizade.busticket.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class TicketDao extends BaseDao<Ticket> {
     public TicketDao(EntityManager entityManager) {
@@ -36,6 +38,13 @@ public class TicketDao extends BaseDao<Ticket> {
     @Override
     public void remove(Integer id) {
         remove(loadById(id));
+    }
+
+    public List<Ticket> getUserTickets(User user) {
+        TypedQuery<Ticket> query = entityManager.createQuery("From Ticket t where t.owner=:user", getEntityClass());
+        query.setParameter("user",user);
+        List<Ticket> resultList = query.getResultList();
+        return resultList;
     }
 
     @Override
