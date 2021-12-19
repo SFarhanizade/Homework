@@ -32,5 +32,15 @@ public abstract class BaseDao<T extends BaseEntity> {
         return resultList;
     }
 
+    public void remove(T entity) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    public void remove(Integer id) {
+        remove(loadById(id));
+    }
+
     public abstract Class<T> getEntityClass();
 }

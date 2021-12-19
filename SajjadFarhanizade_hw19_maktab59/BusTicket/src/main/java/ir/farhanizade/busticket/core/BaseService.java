@@ -24,4 +24,12 @@ public class BaseService<T extends BaseEntity> {
         List<T> resultList = baseDao.loadAll();
         return resultList;
     }
+
+    public void remove(T entity) {
+        baseDao.remove(entity);
+    }
+
+    public void remove(Integer id){
+        baseDao.remove(id);
+    }
 }
