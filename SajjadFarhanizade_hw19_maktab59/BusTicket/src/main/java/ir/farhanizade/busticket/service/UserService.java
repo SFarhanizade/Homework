@@ -8,4 +8,8 @@ public class UserService extends BaseService<User> {
     public UserService() {
         baseDao = new UserDao(entityManager);
     }
+
+    public User login(String username, String password){
+        return ((UserDao)baseDao).login(username, password);
+    }
 }
