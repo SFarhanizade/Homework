@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Travel> travels = (List<Travel>) request.getAttribute("travels");
-    if(travels!=null){
+    if (travels != null) {
 %>
 <html>
 <head>
@@ -36,11 +36,14 @@
         for (Travel travel : travels) {
     %>
     <tr>
-        <td><%=travel.getId()%></td>
-        <td><%=travel.getTime()%></td>
+        <td><%=travel.getId()%>
+        </td>
+        <td><%=travel.getTime()%>
+        </td>
         <td>
-            <a href="selectTicket.jsp?travel=<%=travel.getId()%>">
-                <button class="btn btn-info">Select</button>
+            <form method="post" action="selectTicket.jsp">
+                <button class="btn btn-info" type="submit" name="travel" value="<%=travel.getId()%>">Select</button>
+            </form>
             </a>
         </td>
     </tr>
