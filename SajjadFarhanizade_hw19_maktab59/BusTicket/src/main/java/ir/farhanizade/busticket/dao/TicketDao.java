@@ -26,6 +26,19 @@ public class TicketDao extends BaseDao<Ticket> {
     }
 
     @Override
+    public void remove(Ticket entity) {
+        entityManager.getTransaction().begin();
+        entity.getOwner().getTickets().remove(entity);
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void remove(Integer id) {
+        remove(loadById(id));
+    }
+
+    @Override
     public Class<Ticket> getEntityClass() {
         return Ticket.class;
     }
