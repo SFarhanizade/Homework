@@ -22,8 +22,8 @@
     <title>Title</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<table class="table text-center">
+<body class="container">
+<table class="table text-center w-75 m-auto">
     <thead class="table-dark">
     <td colspan="3">Tickets</td>
     </thead>

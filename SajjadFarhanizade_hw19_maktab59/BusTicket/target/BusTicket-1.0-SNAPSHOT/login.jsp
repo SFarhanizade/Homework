@@ -11,8 +11,8 @@
     if (user == null) {
         Object travel = request.getAttribute("travel");
         Object redirect = request.getAttribute("redirect");
+        String parameters = "travel="+travel+"&redirect="+redirect;
 %>
-<jsp:include page="LoggedInTopBar.jsp"/>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,12 +26,14 @@
 
 <div class="login">
     <form method="post"
-          action="login
-          <%= (redirect==null)?"":"?redirect="+redirect%><%= (travel==null)?"":"&travel="+travel%>">
+          action="login<%= (redirect==null)?"":"?redirect="+redirect%><%= (travel==null)?"":"&travel="+travel%>">
         <label class="login-text">Login</label>
         <input type="text" class="input" placeholder="Username" name="username"/>
-        <input type="text" class="input" placeholder="Password" name="password"/>
+        <input type="password" class="input" placeholder="Password" name="password"/>
         <input type="submit">
+    </form>
+    <form method="post" action="signUp.jsp<%="?"+parameters%>">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
 </div>
 

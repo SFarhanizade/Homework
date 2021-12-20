@@ -21,8 +21,8 @@
     <title>Title</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<form class="container d-flex flex-wrap" method="post" action="buyTicket?travel=<%=travel%>">
+<body class="container">
+<form class="container d-flex flex-wrap w-75 m-auto" method="post" action="buyTicket?travel=<%=travel%>">
     <div class="flex-grow-1 mt-1">
         <lable class="flex-grow-1" for="fName">First Name</lable>
         <input class="flex-grow-1" type="text" name="fName"/>
