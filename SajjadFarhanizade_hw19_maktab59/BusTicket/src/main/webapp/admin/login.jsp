@@ -28,7 +28,7 @@
           <%= (redirect==null)?"":"?redirect="+redirect%>">
         <label class="login-text">Login</label>
         <input type="text" class="input" placeholder="Username" name="username"/>
-        <input type="text" class="input" placeholder="Password" name="password"/>
+        <input type="password" class="input" placeholder="Password" name="password"/>
         <input type="submit">
     </form>
 </div>
