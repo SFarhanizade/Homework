@@ -17,14 +17,24 @@ public class UserDao extends BaseDao<User> {
         return User.class;
     }
 
-    public User login(String username, String password){
+    public User login(String username, String password) {
         TypedQuery<User> query = entityManager.createQuery(
-               "From User u Where u.username=:username AND u.password=:password",
+                "From User u Where u.username=:username AND u.password=:password",
                 getEntityClass());
         query.setParameter("username", username);
         query.setParameter("password", password);
         List<User> resultList = query.getResultList();
         if (resultList.size() == 1)
+            return resultList.get(0);
+        return null;
+    }
+
+    public User loadByUsername(String username) {
+        TypedQuery<User> query = entityManager.createQuery("From User u where u.username=:username",
+                getEntityClass());
+        query.setParameter("username", username);
+        List<User> resultList = query.getResultList();
+        if(resultList.size()==1)
             return resultList.get(0);
         return null;
     }

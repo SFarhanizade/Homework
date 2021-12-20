@@ -12,4 +12,8 @@ public class UserService extends BaseService<User> {
     public User login(String username, String password){
         return ((UserDao)baseDao).login(username, password);
     }
+
+    public User loadByUsername(String username) {
+        return ((UserDao)baseDao).loadByUsername(username);
+    }
 }
