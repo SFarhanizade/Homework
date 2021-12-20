@@ -37,6 +37,7 @@ public class BuyTicketServlet extends HttpServlet {
                     .travel(travel)
                     .build();
             new TicketService().saveOrUpdate(ticket);
+            req.setAttribute("ticket", ticket);
             req.getRequestDispatcher("ticketReceipt.jsp").forward(req, resp);
         }
     }
