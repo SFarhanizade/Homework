@@ -17,8 +17,8 @@
     <title>Travels</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<table class="table text-center">
+<body class="container">
+<table class="table text-center w-75 m-auto">
     <thead class="table-dark">
     <td style="text-align:left"> Route: <%=travels.get(0).getOrigin().getName()%>
         - <%=travels.get(0).getDestination().getName()%>

@@ -18,13 +18,13 @@
     <title>Title</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<div class="container text-center" style="background-color: #146c43; color: #fff">
+<body class="container">
+<div class="container text-center w-75 m-auto" style="background-color: #146c43; color: #fff">
     <p><%=gender+" "+name%>, the purchase was successful.</p>
     <p>Ticket ID: <%=travel%></p>
+    <a href="index.jsp">
+        <button class="btn btn-primary">OK</button>
+    </a>
 </div>
-<a href="index.jsp">
-    <button class="btn btn-primary">OK</button>
-</a>
 </body>
 </html>

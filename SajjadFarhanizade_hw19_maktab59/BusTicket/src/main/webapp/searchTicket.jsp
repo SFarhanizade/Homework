@@ -17,8 +17,8 @@
 <head>
     <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
 </head>
-<body>
-<div class="container mb-2">
+<body class="container">
+<div class="container mb-2 w-75 m-auto">
     <form class="d-flex flex-wrap" method="get" action="getTickets">
         <div class="flex-grow-1" style="margin-right: 1rem">
             <p style="margin: 0">Origin</p>

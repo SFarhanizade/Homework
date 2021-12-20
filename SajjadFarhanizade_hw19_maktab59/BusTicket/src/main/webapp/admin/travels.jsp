@@ -15,15 +15,15 @@
     List<Travel> travels = new TravelService().loadAll();
     CityService cityService = new CityService();
     List<City> cities = cityService.loadAll();
-    if (travels.size()>0) {
+    if (travels.size() > 0) {
 %>
 <html>
 <head>
     <title>Travels</title>
     <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<table class="table text-center">
+<body class="container">
+<table class="table text-center w-75 m-auto">
     <thead class="table-dark mt-0">
     <td>Travel ID</td>
     <td>Departure Time</td>
@@ -52,51 +52,53 @@
     </tbody>
 </table>
 <%
-} else{
+} else {
 %>
 <script>window.alert('No Travels Found!');</script>
 <%
     }
 %>
-<p>Add a new Travel</p>
-<form class="d-flex flex-wrap" method="post" action="../addTravel">
-    <div class="flex-grow-1" style="margin-right: 1rem">
-        <p style="margin: 0">Origin</p>
-        <select class="form-select " aria-label="Default select example" name="origin">
-            <option value="" selected>Choose origin</option>
-            <%
-                for (City city : cities) {
-            %>
-            <option value="<%=city.getId()%>"><%=city.getName()%>
-            </option>
-            <%
-                }
-            %>
-        </select>
-    </div>
-    <div class="flex-grow-1" style="margin-right: 1rem">
-        <p style="margin: 0">Destination</p>
-        <select class="form-select" aria-label="Default select example" name="destination">
-            <option value="" selected>Choose destination</option>
-            <%
-                for (City city : cities) {
-            %>
-            <option value="<%=city.getId()%>"><%=city.getName()%>
-            </option>
-            <%
-                }
-            %>
-        </select>
-    </div>
-    <div class="flex-grow-1" style="margin-right: 1rem">
-        <p style="margin: 0">Date</p>
-        <input class=" form-control" type="date" name="date"/>
-    </div>
-    <div class="flex-grow-1" style="margin-right: 1rem">
-        <p style="margin: 0">Time</p>
-        <input class=" form-control" type="time" name="time"/>
-    </div>
-    <button class="btn btn-success mt-4 flex-grow-1" type="submit">Add</button>
-</form>
+<div class="w-75 m-auto">
+    <p>Add a new Travel</p>
+    <form class="d-flex flex-wrap" method="post" action="../addTravel">
+        <div class="flex-grow-1" style="margin-right: 1rem">
+            <p style="margin: 0">Origin</p>
+            <select class="form-select " aria-label="Default select example" name="origin">
+                <option value="" selected>Choose origin</option>
+                <%
+                    for (City city : cities) {
+                %>
+                <option value="<%=city.getId()%>"><%=city.getName()%>
+                </option>
+                <%
+                    }
+                %>
+            </select>
+        </div>
+        <div class="flex-grow-1" style="margin-right: 1rem">
+            <p style="margin: 0">Destination</p>
+            <select class="form-select" aria-label="Default select example" name="destination">
+                <option value="" selected>Choose destination</option>
+                <%
+                    for (City city : cities) {
+                %>
+                <option value="<%=city.getId()%>"><%=city.getName()%>
+                </option>
+                <%
+                    }
+                %>
+            </select>
+        </div>
+        <div class="flex-grow-1" style="margin-right: 1rem">
+            <p style="margin: 0">Date</p>
+            <input class=" form-control" type="date" name="date"/>
+        </div>
+        <div class="flex-grow-1" style="margin-right: 1rem">
+            <p style="margin: 0">Time</p>
+            <input class=" form-control" type="time" name="time"/>
+        </div>
+        <button class="btn btn-success mt-4 flex-grow-1" type="submit">Add</button>
+    </form>
+</div>
 </body>
 </html>
