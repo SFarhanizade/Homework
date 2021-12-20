@@ -20,8 +20,8 @@
     <title>Cities</title>
     <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<table class="table text-center">
+<body class="container d-flex w-75 align-items-center">
+<table class="table text-center w-75 flex-grow-1 m-auto">
     <thead class="table-dark mt-0">
     <td>City ID</td>
     <td>Name</td>
@@ -56,11 +56,13 @@
 <%
     }
 %>
+<div class="w-75">
 <p>Add a new City</p>
 <form class="form" method="post" action="../addCity">
     <label for="city">City</label>
     <input id="city" name="city" type="text">
     <button type="submit">Add</button>
 </form>
+</div>
 </body>
 </html>
