@@ -39,6 +39,7 @@
 <body class="align-items-center align-content-center mt-1">
 <div class="container d-flex w-75 align-items-center">
     <a href="login.jsp"     class="btn btn-primary flex-grow-1 m-auto">login</a>
+    <a href="signUp.jsp"     class="btn btn-primary flex-grow-1 m-auto">sign up</a>
     <a href="index.jsp"       class="btn btn-primary flex-grow-1 m-auto">buy tickets</a>
 </div>
 </body>
